@@ -14,10 +14,8 @@
  * limitations under the License.
  */
 
-import 'dart:io';
-
+import 'package:document_file_save_plus/document_file_save_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
@@ -362,11 +360,8 @@ class PdfPreviewState extends State<PdfPreview> {
         ) async {
           final bytes = await build(pageFormat);
 
-          final appDocDir = await getApplicationDocumentsDirectory();
-          final appDocPath = appDocDir.path;
-          final file = File('$appDocPath/document.pdf');
-          print('Save as file ${file.path} ...');
-          await file.writeAsBytes(bytes);
+          await DocumentFileSavePlus()
+              .saveFile(bytes, "my_sample_file.pdf", "appliation/pdf");
         },
       ));
     }

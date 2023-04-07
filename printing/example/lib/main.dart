@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(title: Text(title)),
         body: PdfPreview(
           build: (format) => _generatePdf(format, title),
+          title: const Text("Resume"),
         ),
       ),
     );
