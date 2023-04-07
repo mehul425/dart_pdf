@@ -15,13 +15,8 @@
  */
 
 import 'dart:async';
-import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:url_launcher/url_launcher.dart' as ul;
@@ -108,21 +103,6 @@ class MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
     );
   }
 
-  Future<void> _saveAsFile(
-    BuildContext context,
-    LayoutCallback build,
-    PdfPageFormat pageFormat,
-  ) async {
-    final bytes = await build(pageFormat);
-
-    final appDocDir = await getApplicationDocumentsDirectory();
-    final appDocPath = appDocDir.path;
-    final file = File('$appDocPath/document.pdf');
-    print('Save as file ${file.path} ...');
-    await file.writeAsBytes(bytes);
-    await OpenFile.open(file.path);
-  }
-
   @override
   Widget build(BuildContext context) {
     pw.RichText.debug = true;
@@ -130,14 +110,6 @@ class MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
     if (_tabController == null) {
       return const Center(child: CircularProgressIndicator());
     }
-
-    final actions = <PdfPreviewAction>[
-      if (!kIsWeb)
-        PdfPreviewAction(
-          icon: const Icon(Icons.save),
-          onPressed: _saveAsFile,
-        )
-    ];
 
     return Scaffold(
       appBar: AppBar(
@@ -151,14 +123,10 @@ class MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
       body: PdfPreview(
         maxPageWidth: 700,
         build: (format) => examples[_tab].builder(format, _data),
-        actions: actions,
+        title: const Text("Resume"),
+        showLanding: true,
         onPrinted: _showPrintedToast,
         onShared: _showSharedToast,
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.deepOrange,
-        onPressed: _showSources,
-        child: const Icon(Icons.code),
       ),
     );
   }

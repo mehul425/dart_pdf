@@ -14,7 +14,10 @@
  * limitations under the License.
  */
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
@@ -34,12 +37,17 @@ class PdfPreview extends StatefulWidget {
   const PdfPreview({
     Key? key,
     required this.build,
+    required this.title,
     this.initialPageFormat,
+    this.landing = Icons.arrow_back,
+    this.download = Icons.download,
     this.allowPrinting = true,
+    this.allowDownload = true,
     this.allowSharing = true,
+    this.showLanding = false,
     this.maxPageWidth,
-    this.canChangePageFormat = true,
-    this.canChangeOrientation = true,
+    this.canChangePageFormat = false,
+    this.canChangeOrientation = false,
     this.canDebug = true,
     this.actions,
     this.pageFormats = _defaultPageFormats,
@@ -91,12 +99,17 @@ class PdfPreview extends StatefulWidget {
   const PdfPreview.builder({
     Key? key,
     required this.build,
+    required this.title,
     this.initialPageFormat,
+    this.landing = Icons.arrow_back,
+    this.download = Icons.download,
     this.allowPrinting = true,
+    this.showLanding = false,
+    this.allowDownload = true,
     this.allowSharing = true,
     this.maxPageWidth,
-    this.canChangePageFormat = true,
-    this.canChangeOrientation = true,
+    this.canChangePageFormat = false,
+    this.canChangeOrientation = false,
     this.canDebug = true,
     this.actions,
     this.pageFormats = _defaultPageFormats,
@@ -127,6 +140,7 @@ class PdfPreview extends StatefulWidget {
     'A4': PdfPageFormat.a4,
     'Letter': PdfPageFormat.letter,
   };
+  final Widget title;
 
   /// Called when a pdf document is needed
   final LayoutCallback build;
@@ -136,6 +150,10 @@ class PdfPreview extends StatefulWidget {
 
   /// Add a button to print the pdf document
   final bool allowPrinting;
+  final bool allowDownload;
+  final bool showLanding;
+  final IconData landing;
+  final IconData download;
 
   /// Add a button to share the pdf document
   final bool allowSharing;
@@ -334,6 +352,25 @@ class PdfPreviewState extends State<PdfPreview> {
       ));
     }
 
+    if (widget.useActions && widget.allowDownload) {
+      actions.add(PdfPreviewAction(
+        icon: Icon(widget.download),
+        onPressed: (
+          BuildContext context,
+          LayoutCallback build,
+          PdfPageFormat pageFormat,
+        ) async {
+          final bytes = await build(pageFormat);
+
+          final appDocDir = await getApplicationDocumentsDirectory();
+          final appDocPath = appDocDir.path;
+          final file = File('$appDocPath/document.pdf');
+          print('Save as file ${file.path} ...');
+          await file.writeAsBytes(bytes);
+        },
+      ));
+    }
+
     if (widget.useActions && widget.allowSharing && info?.canShare == true) {
       actions.add(PdfShareAction(
         filename: widget.pdfFileName,
@@ -376,50 +413,43 @@ class PdfPreviewState extends State<PdfPreview> {
 
     return PdfPreviewController(
       data: previewData,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Expanded(
-            child: Builder(builder: (context) {
-              final controller = PdfPreviewController.listen(context);
-              return PdfPreviewCustom(
-                key: previewWidget,
-                build: controller.buildDocument,
-                loadingWidget: widget.loadingWidget,
-                maxPageWidth: widget.maxPageWidth,
-                onError: widget.onError,
-                padding: widget.padding,
-                pageFormat: controller.pageFormat,
-                pages: widget.pages,
-                pdfPreviewPageDecoration: widget.pdfPreviewPageDecoration,
-                previewPageMargin: widget.previewPageMargin,
-                scrollViewDecoration: widget.scrollViewDecoration,
-                shouldRepaint: widget.shouldRepaint,
-                pagesBuilder: widget._pagesBuilder,
-                dpi: widget.dpi,
-              );
-            }),
-          ),
-          if (actions.isNotEmpty)
-            IconTheme.merge(
-              data: IconThemeData(
-                color: iconColor,
-              ),
-              child: Material(
-                elevation: 4,
-                color: theme.primaryColor,
-                child: SizedBox(
-                  width: double.infinity,
-                  child: SafeArea(
-                    child: Wrap(
-                      alignment: WrapAlignment.spaceAround,
-                      children: actions,
-                    ),
+      child: Scaffold(
+        appBar: AppBar(
+          title: widget.title,
+          titleSpacing: widget.showLanding ? 0 : 16,
+          leading: widget.showLanding
+              ? InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  customBorder: const CircleBorder(),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(widget.landing),
                   ),
-                ),
-              ),
-            ),
-        ],
+                )
+              : null,
+          actions: actions,
+        ),
+        body: Builder(builder: (context) {
+          final controller = PdfPreviewController.listen(context);
+          return PdfPreviewCustom(
+            key: previewWidget,
+            build: controller.buildDocument,
+            loadingWidget: widget.loadingWidget,
+            maxPageWidth: widget.maxPageWidth,
+            onError: widget.onError,
+            padding: widget.padding,
+            pageFormat: controller.pageFormat,
+            pages: widget.pages,
+            pdfPreviewPageDecoration: widget.pdfPreviewPageDecoration,
+            previewPageMargin: widget.previewPageMargin,
+            scrollViewDecoration: widget.scrollViewDecoration,
+            shouldRepaint: widget.shouldRepaint,
+            pagesBuilder: widget._pagesBuilder,
+            dpi: widget.dpi,
+          );
+        }),
       ),
     );
   }
