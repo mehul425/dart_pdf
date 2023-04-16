@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import 'package:document_file_save_plus/document_file_save_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -38,9 +37,8 @@ class PdfPreview extends StatefulWidget {
     required this.title,
     this.initialPageFormat,
     this.landing = Icons.arrow_back,
-    this.download = Icons.download,
+    this.downloadAction,
     this.allowPrinting = true,
-    this.allowDownload = true,
     this.allowSharing = true,
     this.showLanding = false,
     this.maxPageWidth,
@@ -100,11 +98,10 @@ class PdfPreview extends StatefulWidget {
     required this.title,
     this.initialPageFormat,
     this.landing = Icons.arrow_back,
-    this.download = Icons.download,
     this.allowPrinting = true,
     this.showLanding = false,
-    this.allowDownload = true,
     this.allowSharing = true,
+    this.downloadAction,
     this.maxPageWidth,
     this.canChangePageFormat = false,
     this.canChangeOrientation = false,
@@ -148,10 +145,9 @@ class PdfPreview extends StatefulWidget {
 
   /// Add a button to print the pdf document
   final bool allowPrinting;
-  final bool allowDownload;
+  final PdfPreviewAction? downloadAction;
   final bool showLanding;
   final IconData landing;
-  final IconData download;
 
   /// Add a button to share the pdf document
   final bool allowSharing;
@@ -353,20 +349,8 @@ class PdfPreviewState extends State<PdfPreview> {
       ));
     }
 
-    if (widget.useActions && widget.allowDownload) {
-      actions.add(PdfPreviewAction(
-        icon: Icon(widget.download),
-        onPressed: (
-          BuildContext context,
-          LayoutCallback build,
-          PdfPageFormat pageFormat,
-        ) async {
-          final bytes = await build(pageFormat);
-
-          await DocumentFileSavePlus()
-              .saveFile(bytes, "my_sample_file.pdf", "appliation/pdf");
-        },
-      ));
+    if (widget.useActions && widget.downloadAction != null) {
+      actions.add(widget.downloadAction!);
     }
 
     if (widget.useActions && widget.allowSharing && info?.canShare == true) {
