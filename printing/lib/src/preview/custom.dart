@@ -221,20 +221,32 @@ class PdfPreviewCustomState extends State<PdfPreviewCustom>
   }
 
   Widget _zoomPreview() {
-    return GestureDetector(
-      onDoubleTap: () {
-        setState(() {
-          preview = null;
-        });
+    return WillPopScope(
+      onWillPop: () {
+        if (preview != null) {
+          setState(() {
+            preview = null;
+          });
+          return Future.value(false);
+        } else {
+          return Future.value(true);
+        }
       },
-      child: InteractiveViewer(
-        transformationController: transformationController,
-        maxScale: 5,
-        child: Center(
-          child: PdfPreviewPage(
-            pageData: pages[preview!],
-            pdfPreviewPageDecoration: widget.pdfPreviewPageDecoration,
-            pageMargin: widget.previewPageMargin,
+      child: GestureDetector(
+        onDoubleTap: () {
+          setState(() {
+            preview = null;
+          });
+        },
+        child: InteractiveViewer(
+          transformationController: transformationController,
+          maxScale: 5,
+          child: Center(
+            child: PdfPreviewPage(
+              pageData: pages[preview!],
+              pdfPreviewPageDecoration: widget.pdfPreviewPageDecoration,
+              pageMargin: widget.previewPageMargin,
+            ),
           ),
         ),
       ),
