@@ -126,7 +126,7 @@ class MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
       body: PdfPreview(
         maxPageWidth: 700,
         build: (format) => examples[_tab].builder(format, _data),
-        title: const Text("Resume"),
+        title: const Text('Resume'),
         downloadAction: PdfPreviewAction(
           icon: const Icon(Icons.download),
           onPressed: (
