@@ -390,13 +390,15 @@ class MultiPage extends Page {
     final pageWidthMargin = _mustRotate ? _margin.vertical : _margin.horizontal;
     final availableWidth = pageWidth - pageWidthMargin;
 
-    for (final page in _pages) {
+    _pages.asMap().forEach((key, page) {
       var offsetStart = pageHeight -
           (_mustRotate ? pageHeightMargin - _margin.bottom : _margin.top);
       var offsetEnd =
           _mustRotate ? pageHeightMargin - _margin.left : _margin.bottom;
 
-      if (pageTheme.buildBackground != null) {
+      if (pageTheme.buildBackground != null &&
+          (!pageTheme.showOnly1stPageBackground ||
+              (pageTheme.showOnly1stPageBackground && key == 0))) {
         final child = pageTheme.buildBackground!(page.context);
 
         child.layout(page.context, page.fullConstraints, parentUsesSize: false);
@@ -560,6 +562,10 @@ class MultiPage extends Page {
         _paintChild(page.context, child, _margin.left, _margin.bottom,
             pageFormat.height);
       }
-    }
+    });
+
+    // for (final page in _pages) {
+    //
+    // }
   }
 }

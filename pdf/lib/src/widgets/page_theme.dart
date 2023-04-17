@@ -33,9 +33,16 @@ class PageTheme {
     EdgeInsets? margin,
     this.clip = false,
     this.textDirection,
+    this.showOnly1stPageBackground = false,
   })  : pageFormat = pageFormat ?? PdfPageFormat.standard,
         orientation = orientation ?? PageOrientation.natural,
         _margin = margin;
+
+  // Its only used for multi page,
+  // If its true and background builder is provided then background is only show for 1st page.
+  // If its false and background builder is provided then background is show to the all pages.
+  // If background builder is not provided then background is not show to the all pages.
+  final bool showOnly1stPageBackground;
 
   final PdfPageFormat pageFormat;
 
@@ -86,6 +93,7 @@ class PageTheme {
     PageOrientation? orientation,
     EdgeInsets? margin,
     bool? clip,
+    bool? showOnly1stPageBackground,
     TextDirection? textDirection,
   }) =>
       PageTheme(
@@ -96,6 +104,8 @@ class PageTheme {
         orientation: orientation ?? this.orientation,
         margin: margin ?? this.margin,
         clip: clip ?? this.clip,
+        showOnly1stPageBackground:
+            showOnly1stPageBackground ?? this.showOnly1stPageBackground,
         textDirection: textDirection ?? this.textDirection,
       );
 }

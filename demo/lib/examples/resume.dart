@@ -174,6 +174,7 @@ Future<pw.PageTheme> _myPageTheme(PdfPageFormat format) async {
       bold: await PdfGoogleFonts.openSansBold(),
       icons: await PdfGoogleFonts.materialIcons(),
     ),
+    showOnly1stPageBackground: true,
     buildBackground: (pw.Context context) {
       return pw.FullPage(
         ignoreMargins: true,
