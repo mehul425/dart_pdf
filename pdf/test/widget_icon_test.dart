@@ -36,7 +36,12 @@ void main() {
   test('Icon Widgets', () {
     pdf.addPage(
       MultiPage(
-        theme: ThemeData.withFont(icons: icons),
+        theme: ThemeData.withFont(icons: [
+          FontData(
+            font: icons!,
+            name: 'MaterialIcons',
+          ),
+        ]),
         build: (Context context) {
           final iconList = <IconData>[];
           final pdfFont = icons!.getFont(context);
@@ -44,7 +49,10 @@ void main() {
             iconList.addAll(
               pdfFont.font.charToGlyphIndexMap.keys
                   .where((e) => e > 0x7f && e < 0xe05d)
-                  .map((e) => IconData(e)),
+                  .map((e) => IconData(
+                        e,
+                        pdfFont.fontName,
+                      )),
             );
           }
 
