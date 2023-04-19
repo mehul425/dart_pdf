@@ -48,7 +48,7 @@ Future<void> pdfDefaultTheme() async {
       bold: bold,
       italic: italic,
       boldItalic: boldItalic,
-      icons: icons,
+      icons: [FontData(font: icons, name: 'MaterialIcons')],
       fontFallback: [emoji, base],
     );
   };

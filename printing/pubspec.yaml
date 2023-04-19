@@ -31,6 +31,8 @@ dependencies:
       url: https://github.com/mehul425/dart_pdf.git
       ref: improved
       path: pdf
+#  pdf:
+#    path: ../pdf/
       
   plugin_platform_interface: ^2.1.0
 
