@@ -19,7 +19,6 @@ import 'package:vector_math/vector_math_64.dart';
 
 import '../../pdf.dart';
 import 'basic.dart';
-import 'font.dart';
 import 'geometry.dart';
 import 'text.dart';
 import 'text_style.dart';
@@ -31,12 +30,14 @@ import 'widget.dart';
 class IconData {
   /// Creates icon data.
   const IconData(
-    this.codePoint, {
+    this.codePoint,
+    this.name, {
     this.matchTextDirection = false,
   });
 
   /// The Unicode code point at which this icon is stored in the icon font.
   final int codePoint;
+  final String name;
 
   /// Whether this icon should be automatically mirrored in right-to-left
   /// environments.
@@ -47,7 +48,12 @@ class IconData {
 @immutable
 class IconThemeData {
   /// Creates an icon theme data.
-  const IconThemeData({this.color, this.opacity, this.size, this.font});
+  const IconThemeData({
+    this.color,
+    this.opacity,
+    this.size,
+    required this.font,
+  });
 
   /// Creates an icon them with some reasonable default values.
   const IconThemeData.fallback(this.font)
@@ -57,8 +63,12 @@ class IconThemeData {
 
   /// Creates a copy of this icon theme but with the given fields replaced with
   /// the new values.
-  IconThemeData copyWith(
-      {PdfColor? color, double? opacity, double? size, Font? font}) {
+  IconThemeData copyWith({
+    PdfColor? color,
+    double? opacity,
+    double? size,
+    List<FontData>? font,
+  }) {
     return IconThemeData(
       color: color ?? this.color,
       opacity: opacity ?? this.opacity,
@@ -77,7 +87,7 @@ class IconThemeData {
   final double? size;
 
   /// The font to use
-  final Font? font;
+  final List<FontData> font;
 }
 
 /// A graphical icon widget drawn with a glyph from a font described in
@@ -89,7 +99,6 @@ class Icon extends StatelessWidget {
     this.size,
     this.color,
     this.textDirection,
-    this.font,
   }) : super();
 
   /// The icon to display. The available icons are described in [Icons].
@@ -104,9 +113,6 @@ class Icon extends StatelessWidget {
   /// The text direction to use for rendering the icon.
   final TextDirection? textDirection;
 
-  /// Font to use to draw the icon
-  final Font? font;
-
   @override
   Widget build(Context context) {
     final textDirection = this.textDirection ?? Directionality.of(context);
@@ -114,7 +120,11 @@ class Icon extends StatelessWidget {
     final iconSize = size ?? iconTheme.size;
     final iconColor = color ?? iconTheme.color!;
     final iconOpacity = iconColor.alpha;
-    final iconFont = font ?? iconTheme.font;
+    final iconFont = iconTheme.font
+        .firstWhere(
+          (element) => element.name == icon.name,
+        )
+        .font;
 
     Widget iconWidget = RichText(
       textDirection: textDirection,

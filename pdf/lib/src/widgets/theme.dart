@@ -26,6 +26,17 @@ import 'widget.dart';
 typedef DefaultThemeDataBuilder = ThemeData Function();
 
 @immutable
+class FontData {
+  const FontData({
+    required this.font,
+    required this.name,
+  });
+
+  final String name;
+  final Font font;
+}
+
+@immutable
 class ThemeData extends Inherited {
   factory ThemeData({
     TextStyle? defaultTextStyle,
@@ -101,7 +112,7 @@ class ThemeData extends Inherited {
     Font? bold,
     Font? italic,
     Font? boldItalic,
-    Font? icons,
+    List<FontData>? icons,
     List<Font>? fontFallback,
   }) {
     final defaultStyle = TextStyle.defaultStyle().copyWith(
@@ -129,7 +140,7 @@ class ThemeData extends Inherited {
       tableCell: defaultStyle.copyWith(fontSize: fontSize * 0.8),
       softWrap: true,
       overflow: TextOverflow.visible,
-      iconTheme: IconThemeData.fallback(icons),
+      iconTheme: IconThemeData.fallback(icons!),
     );
   }
 

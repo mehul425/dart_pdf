@@ -98,16 +98,19 @@ Future<Uint8List> generateResume(PdfPageFormat format, CustomData data) async {
                   _Category(title: 'Work Experience'),
                   _Block(
                       title: 'Tour bus driver',
-                      icon: const pw.IconData(0xe530)),
+                      icon: const pw.IconData(0xe530, 'MaterialIcons')),
                   _Block(
                       title: 'Logging equipment operator',
-                      icon: const pw.IconData(0xe30d)),
-                  _Block(title: 'Foot doctor', icon: const pw.IconData(0xe3f3)),
+                      icon: const pw.IconData(0xe30d, 'MaterialIcons')),
+                  _Block(
+                      title: 'Foot doctor',
+                      icon: const pw.IconData(0xe3f3, 'MaterialIcons')),
                   _Block(
                       title: 'Unicorn trainer',
-                      icon: const pw.IconData(0xf0cf)),
+                      icon: const pw.IconData(0xf0cf, 'MaterialIcons')),
                   _Block(
-                      title: 'Chief chatter', icon: const pw.IconData(0xe0ca)),
+                      title: 'Chief chatter',
+                      icon: const pw.IconData(0xe0ca, 'MaterialIcons')),
                   pw.SizedBox(height: 20),
                   _Category(title: 'Education'),
                   _Block(title: 'Bachelor Of Commerce'),
@@ -172,7 +175,12 @@ Future<pw.PageTheme> _myPageTheme(PdfPageFormat format) async {
     theme: pw.ThemeData.withFont(
       base: await PdfGoogleFonts.openSansRegular(),
       bold: await PdfGoogleFonts.openSansBold(),
-      icons: await PdfGoogleFonts.materialIcons(),
+      icons: [
+        pw.FontData(
+          font: await PdfGoogleFonts.materialIcons(),
+          name: 'MaterialIcons',
+        ),
+      ],
     ),
     showOnly1stPageBackground: true,
     buildBackground: (pw.Context context) {
