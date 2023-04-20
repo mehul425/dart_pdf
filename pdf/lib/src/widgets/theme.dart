@@ -140,7 +140,7 @@ class ThemeData extends Inherited {
       tableCell: defaultStyle.copyWith(fontSize: fontSize * 0.8),
       softWrap: true,
       overflow: TextOverflow.visible,
-      iconTheme: IconThemeData.fallback(icons!),
+      iconTheme: IconThemeData.fallback(icons ?? []),
     );
   }
 
