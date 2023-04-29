@@ -48,7 +48,7 @@ class Calendar extends StatelessWidget {
         DateFormat.yMMMM().format(date),
         style: const TextStyle(
           color: PdfColors.deepPurple,
-          fontSize: 40,
+          fontSize: 40,fontFamily:'Helvetica',
         ),
       ),
     );
@@ -64,7 +64,7 @@ class Calendar extends StatelessWidget {
       child: Text(
         DateFormat.EEEE().format(date),
         style: const TextStyle(
-          fontSize: 15,
+          fontSize: 15,fontFamily:'Helvetica',
         ),
         maxLines: 1,
         overflow: TextOverflow.clip,
@@ -79,16 +79,16 @@ class Calendar extends StatelessWidget {
     bool currentDay,
   ) {
     var text = '${date.day}';
-    var style = const TextStyle();
+    var style = const TextStyle(fontFamily:'Helvetica',);
     var color = PdfColors.grey300;
 
     if (currentDay) {
-      style = const TextStyle(color: PdfColors.red);
+      style = const TextStyle(color: PdfColors.red,fontFamily:'Helvetica',);
       color = PdfColors.lightBlue50;
     }
 
     if (!currentMonth) {
-      style = const TextStyle(color: PdfColors.grey);
+      style = const TextStyle(color: PdfColors.grey,fontFamily:'Helvetica',);
       color = PdfColors.grey100;
     }
 
@@ -198,8 +198,13 @@ Future<Uint8List> generateCalendar(
         pageFormat: pageFormat,
         orientation: PageOrientation.landscape,
         theme: ThemeData.withFont(
-          base: await PdfGoogleFonts.openSansRegular(),
-          bold: await PdfGoogleFonts.openSansBold(),
+          name: 'OpenSans-Regular',
+          fontList: [
+            FontData(
+              font: await PdfGoogleFonts.openSansRegular(),
+              name: 'OpenSans-Regular',
+            ),
+          ],
         ),
         buildForeground: bg == null
             ? null

@@ -270,7 +270,10 @@ void main() {
             Text(
               'Pets',
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 30),
+              style: const TextStyle(
+                fontSize: 30,
+                fontFamily: 'Helvetica',
+              ),
             ),
             Chart(
               grid: PieGrid(startAngle: 1),

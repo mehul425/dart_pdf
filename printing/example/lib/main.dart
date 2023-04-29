@@ -36,13 +36,17 @@ class MyApp extends StatelessWidget {
     pdf.addPage(
       pw.Page(
         pageFormat: format,
+        theme: pw.ThemeData.withFont(
+          fontList: [pw.FontData(font: font, name: 'Nunito-ExtraLight')],
+        ),
         build: (context) {
           return pw.Column(
             children: [
               pw.SizedBox(
                 width: double.infinity,
                 child: pw.FittedBox(
-                  child: pw.Text(title, style: pw.TextStyle(font: font)),
+                  child: pw.Text(title,
+                      style: const pw.TextStyle(fontFamily: 'Nunito-ExtraLight')),
                 ),
               ),
               pw.SizedBox(height: 20),

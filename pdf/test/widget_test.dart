@@ -37,9 +37,10 @@ void main() {
     pdf = Document(
         title: 'Widgets Test',
         theme: ThemeData.withFont(
-          base: Font.ttf(defaultFont.buffer.asByteData()),
-          bold: Font.ttf(defaultFontBold.buffer.asByteData()),
+          // base: Font.ttf(defaultFont.buffer.asByteData()),
         ));
+
+
 
     final imData = zlib.decode(base64.decode(
         'eJz7//8/w388uOTCT6a4Ez96Q47++I+OI479mEVALyNU7z9seuNP/mAm196Ekz8YR+0dWHtBmJC9S+7/Zog89iMIKLYaHQPVJGLTD7MXpDfq+I9goNhPdPPDjv3YlnH6Jye6+2H21l/6yeB/4HsSDr1bQXrRwq8HqHcGyF6QXp9933N0tn/7Y7vn+/9gLPaih0PDlV9MIAzVm6ez7dsfzW3f/oMwzAx0e7FhoJutdbcj9MKw9frnL2J2POfBpxeEg478YLba/X0Wsl6lBXf+s0bP/s8ePXeWePJCvPEJNYMRZIYWSO/cq/9Z/Nv+M4bO+M8YDjFDJGkhzvSE7A6jRTdnsQR2wfXCMLHuMC5byyidvGgWE5JeZDOIcYdR+TpmkBno+mFmAAC+DGhl'));
@@ -73,6 +74,7 @@ void main() {
                     style: const TextStyle(
                       color: PdfColors.blue,
                       decoration: TextDecoration.underline,
+                      fontFamily: 'Helvetica',
                     ),
                   ),
                 ),
@@ -109,7 +111,7 @@ void main() {
                   tightBounds: true,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).defaultTextStyle.copyWith(
-                        font: Font.timesBoldItalic(),
+                        fontNormal: Font.timesBoldItalic(),
                       ),
                   textScaleFactor: 3,
                 ),
@@ -226,9 +228,11 @@ void main() {
                         TextSpan(
                             text: 'bold',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                color: PdfColors.blue)),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: PdfColors.blue,
+                              fontFamily: 'Helvetica',
+                            )),
                         const TextSpan(
                           text: ' world!',
                         ),
@@ -245,6 +249,7 @@ void main() {
                           color: PdfColors.grey,
                           fontSize: 8,
                           decoration: TextDecoration.underline,
+                          fontFamily:'Helvetica',
                         ),
                       ),
                       destination: 'https://github.com/DavBfr/dart_pdf/')),

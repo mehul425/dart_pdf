@@ -165,7 +165,10 @@ class _TextDecoration {
 
     final box = _getBox(spans);
 
-    final font = style.font!.getFont(context);
+    final font = style.fontList
+        .firstWhere((element) => element.name == style.fontFamily)
+        .font
+        .getFont(context);
     final space =
         _space * style.fontSize! * textScaleFactor * style.decorationThickness!;
 
@@ -290,7 +293,10 @@ class _Word extends _Span {
     PdfPoint point,
   ) {
     context.canvas.drawString(
-      style.font!.getFont(context),
+      style.fontList
+          .firstWhere((element) => element.name == style.fontFamily)
+          .font
+          .getFont(context),
       style.fontSize! * textScaleFactor,
       text,
       point.x + offset.x,
@@ -786,8 +792,10 @@ class RichText extends Widget with SpanningWidget {
       if (span.text == null) {
         return true;
       }
-
-      final font = style!.font!.getFont(context);
+      final font = style!.fontList
+          .firstWhere((element) => element.name == style.fontFamily)
+          .font
+          .getFont(context);
 
       var text = span.text!.runes.toList();
 
@@ -831,11 +839,7 @@ class RichText extends Widget with SpanningWidget {
               spans.add(_addText(
                 text: [rune],
                 style: style.copyWith(
-                  font: fb,
                   fontNormal: fb,
-                  fontBold: fb,
-                  fontBoldItalic: fb,
-                  fontItalic: fb,
                 ),
                 baseline: span.baseline,
                 annotation: annotation,
@@ -918,7 +922,10 @@ class RichText extends Widget with SpanningWidget {
             continue;
           }
 
-          final font = style!.font!.getFont(context);
+          final font = style!.fontList
+              .firstWhere((element) => element.name == style.fontFamily)
+              .font
+              .getFont(context);
 
           final space =
               font.stringMetrics(' ') * (style.fontSize! * textScaleFactor);

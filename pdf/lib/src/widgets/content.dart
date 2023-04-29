@@ -288,9 +288,10 @@ class Watermark extends StatelessWidget {
   }) : child = Text(
           text,
           style: style ??
-              TextStyle(
+              const TextStyle(
                 color: PdfColors.grey200,
                 fontWeight: FontWeight.bold,
+                fontFamily: 'Helvetica',
               ),
         );
 

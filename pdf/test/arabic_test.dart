@@ -42,7 +42,11 @@ void main() {
     pdf = Document();
 
     arabicFont = loadFont('hacen-tunisia.ttf');
-    style = TextStyle(font: arabicFont, fontSize: 30);
+    style = TextStyle(
+      fontNormal: arabicFont,
+      fontSize: 30,
+      fontFamily: 'Helvetica',
+    );
   });
 
   test('Arabic Diacritics', () {
@@ -475,8 +479,9 @@ void main() {
         text: TextSpan(
           text: 'قهوة\n',
           style: TextStyle(
-            font: arabicFont,
+            fontNormal: arabicFont,
             fontSize: 30,
+            fontFamily: 'Helvetica',
           ),
           children: const <TextSpan>[
             TextSpan(
@@ -484,6 +489,7 @@ void main() {
                   'القهوة مشروب يعد من بذور الب المحمصة، وينمو في أكثر من 70 بلداً. خصوصاً في المناطق الاستوائية في أمريكا الشمالية والجنوبية وجنوب شرق آسيا وشبه القارة الهندية وأفريقيا. ويقال أن البن الأخضر هو ثاني أكثر السلع تداولاً في العالم بعد النفط الخام.',
               style: TextStyle(
                 fontSize: 20,
+                fontFamily: 'Helvetica',
               ),
             ),
           ],
@@ -500,8 +506,9 @@ void main() {
         text: TextSpan(
           text: 'قهوة\n',
           style: TextStyle(
-            font: arabicFont,
+            fontNormal: arabicFont,
             fontSize: 30,
+            fontFamily: 'Helvetica',
           ),
           children: const <TextSpan>[
             TextSpan(
@@ -509,6 +516,7 @@ void main() {
                   'القهوة مشروب يعد من بذور الب المحمصة، وينمو في أكثر من 70 بلداً. خصوصاً في المناطق الاستوائية في أمريكا الشمالية والجنوبية وجنوب شرق آسيا وشبه القارة الهندية وأفريقيا. ويقال أن البن الأخضر هو ثاني أكثر السلع تداولاً في العالم بعد النفط الخام.',
               style: TextStyle(
                 fontSize: 20,
+                fontFamily: 'Helvetica',
               ),
             ),
           ],
@@ -524,8 +532,9 @@ void main() {
         text: TextSpan(
           text: 'الفَرَاشَةُ\n',
           style: TextStyle(
-            font: arabicFont,
+            fontNormal: arabicFont,
             fontSize: 30,
+            fontFamily: 'Helvetica',
           ),
           children: const <TextSpan>[
             if (true)
@@ -536,6 +545,7 @@ void main() {
                     'المَزْرُوعَ، تَلْثُمُهُ فِي وَقْتِ الجُوعِ، تَمْتَصُّ رَحِيْقَ الأَزْهَارِ، تُحْيي جَنْيَ الأَشْجَارِ، مِنْ وَرْدَةٍ لِوَرْدَةٍ، تَطِيْرُ بِانْتِظَامٍ.',
                 style: TextStyle(
                   fontSize: 18,
+                  fontFamily: 'Helvetica',
                 ),
               ),
           ],
@@ -552,8 +562,9 @@ void main() {
         text: TextSpan(
           text: 'النصوص ثنائية الإتجاه Bidirectional Text\n',
           style: TextStyle(
-            font: arabicFont,
+            fontNormal: arabicFont,
             fontSize: 30,
+            fontFamily: 'Helvetica',
           ),
           children: const <TextSpan>[
             if (true)
@@ -567,6 +578,7 @@ void main() {
               ''',
                 style: TextStyle(
                   fontSize: 18,
+                  fontFamily: 'Helvetica',
                 ),
               ),
           ],
@@ -582,8 +594,9 @@ void main() {
         textDirection: TextDirection.rtl,
         text: TextSpan(
           style: TextStyle(
-            font: arabicFont,
+            fontNormal: arabicFont,
             fontSize: 18,
+            fontFamily: 'Helvetica',
           ),
           children: const <TextSpan>[
             TextSpan(

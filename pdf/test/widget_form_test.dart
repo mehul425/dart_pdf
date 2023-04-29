@@ -83,7 +83,7 @@ void main() {
                   child: TextField(
                 name: 'Given Name',
                 value: 'David',
-                textStyle: const TextStyle(color: PdfColors.amber),
+                textStyle: const TextStyle(color: PdfColors.amber,fontFamily:'Helvetica',),
               )),
               //
               SizedBox(width: double.infinity, height: 10),

@@ -32,7 +32,7 @@ class Color extends StatelessWidget {
     final style = Theme.of(context).defaultTextStyle.copyWith(
         color: color.luminance < 0.2 ? PdfColors.white : PdfColors.black,
         fontSize: 14);
-    final hexStyle = style.copyWith(font: Font.courier(), fontSize: 10);
+    final hexStyle = style.copyWith(fontNormal: Font.courier(), fontSize: 10);
     return Container(
         color: color,
         padding: const EdgeInsets.all(2 * PdfPageFormat.mm),

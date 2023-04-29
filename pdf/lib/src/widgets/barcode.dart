@@ -104,7 +104,10 @@ class _BarcodeWidget extends Widget {
       ..fillPath();
 
     if (drawText!) {
-      final font = textStyle!.font!.getFont(context);
+      final font = textStyle!.fontList
+          .firstWhere((element) => element.name == textStyle!.fontFamily)
+          .font
+          .getFont(context);
 
       for (final text in textList) {
         final metrics = font.stringMetrics(text.text);
@@ -207,6 +210,7 @@ class BarcodeWidget extends StatelessWidget {
   /// the barcode data
   final String? dataString;
   final Uint8List? dataBytes;
+
   Uint8List get data =>
       dataBytes ?? Uint8List.fromList(utf8.encode(dataString!));
 
@@ -252,11 +256,7 @@ class BarcodeWidget extends StatelessWidget {
   @override
   Widget build(Context context) {
     final defaultStyle = Theme.of(context).defaultTextStyle.copyWith(
-          font: Font.courier(),
           fontNormal: Font.courier(),
-          fontBold: Font.courierBold(),
-          fontItalic: Font.courierOblique(),
-          fontBoldItalic: Font.courierBoldOblique(),
           lineSpacing: 1,
           fontSize: height != null ? height! * 0.2 : null,
         );

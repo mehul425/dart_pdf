@@ -363,7 +363,11 @@ void main() {
         pageFormat: const PdfPageFormat(150, 150),
         build: (Context context) {
           return [
-            Text('RTL MultiPage', style: const TextStyle(fontSize: 9)),
+            Text('RTL MultiPage',
+                style: const TextStyle(
+                  fontSize: 9,
+                  fontFamily: 'Helvetica',
+                )),
             ListView(
               children: [
                 for (int i = 0; i < 15; i++) Text('List item'),
@@ -382,7 +386,11 @@ void main() {
         pageFormat: const PdfPageFormat(150, 150),
         build: (Context context) {
           return [
-            Text('LTR MultiPage', style: const TextStyle(fontSize: 9)),
+            Text('LTR MultiPage',
+                style: const TextStyle(
+                  fontSize: 9,
+                  fontFamily: 'Helvetica',
+                )),
             ListView(children: [
               for (int i = 0; i < 15; i++) Text('List item'),
             ]),
@@ -743,7 +751,11 @@ class TestAnnotation extends StatelessWidget {
           color: PdfColors.white,
           child: Text(
             anno,
-            style: const TextStyle(color: PdfColors.black, fontSize: 9),
+            style: const TextStyle(
+              color: PdfColors.black,
+              fontSize: 9,
+              fontFamily: 'Helvetica',
+            ),
             textDirection: TextDirection.ltr,
             textAlign: TextAlign.center,
           ),
