@@ -58,7 +58,7 @@ Future<Uint8List> generateResume(PdfPageFormat format, CustomData data) async {
                           textScaleFactor: 2,
                           style: pw.Theme.of(context).defaultTextStyle.copyWith(
                                 fontWeight: pw.FontWeight.bold,
-                                fontFamily:  'Castoro-Regular',
+                                fontFamily: 'Castoro-Regular',
                               ),
                         ),
                         pw.Padding(padding: const pw.EdgeInsets.only(top: 10)),
@@ -78,15 +78,35 @@ Future<Uint8List> generateResume(PdfPageFormat format, CustomData data) async {
                             pw.Column(
                               crossAxisAlignment: pw.CrossAxisAlignment.start,
                               children: <pw.Widget>[
-                                pw.Text('568 Port Washington Road'),
-                                pw.Text('Nordegg, AB T0M 2H0'),
-                                pw.Text('Canada, ON'),
+                                pw.Text(
+                                  '568 Port Washington Road',
+                                  style: const pw.TextStyle(
+                                    fontFamily: 'OpenSans-Regular',
+                                  ),
+                                ),
+                                pw.Text(
+                                  'Nordegg, AB T0M 2H0',
+                                  style: const pw.TextStyle(
+                                    fontFamily: 'OpenSans-Regular',
+                                  ),
+                                ),
+                                pw.Text(
+                                  'Canada, ON',
+                                  style: const pw.TextStyle(
+                                    fontFamily: 'OpenSans-Regular',
+                                  ),
+                                ),
                               ],
                             ),
                             pw.Column(
                               crossAxisAlignment: pw.CrossAxisAlignment.start,
                               children: <pw.Widget>[
-                                pw.Text('+1 403-721-6898'),
+                                pw.Text(
+                                  '+1 403-721-6898',
+                                  style: const pw.TextStyle(
+                                    fontFamily: 'OpenSans-Regular',
+                                  ),
+                                ),
                                 _UrlText('p.charlesbois@yahoo.com',
                                     'mailto:p.charlesbois@yahoo.com'),
                                 _UrlText(
@@ -141,9 +161,24 @@ Future<Uint8List> generateResume(PdfPageFormat format, CustomData data) async {
                           ),
                         ),
                         pw.Column(children: <pw.Widget>[
-                          _Percent(size: 60, value: .7, title: pw.Text('Word')),
                           _Percent(
-                              size: 60, value: .4, title: pw.Text('Excel')),
+                              size: 60,
+                              value: .7,
+                              title: pw.Text(
+                                'Word',
+                                style: const pw.TextStyle(
+                                  fontFamily: 'OpenSans-Regular',
+                                ),
+                              )),
+                          _Percent(
+                              size: 60,
+                              value: .4,
+                              title: pw.Text(
+                                'Excel',
+                                style: const pw.TextStyle(
+                                  fontFamily: 'OpenSans-Regular',
+                                ),
+                              )),
                         ]),
                         // pw.BarcodeWidget(
                         //   data: 'Parnella Charlesbois',
@@ -177,7 +212,6 @@ Future<pw.PageTheme> _myPageTheme(PdfPageFormat format) async {
   return pw.PageTheme(
     pageFormat: format,
     theme: pw.ThemeData.withFont(
-      name: 'OpenSans-Regular',
       fontList: [
         pw.FontData(
           font: await PdfGoogleFonts.openSansRegular(),
@@ -246,10 +280,13 @@ class _Block extends pw.StatelessWidget {
                     shape: pw.BoxShape.circle,
                   ),
                 ),
-                pw.Text(title,
-                    style: pw.Theme.of(context)
-                        .defaultTextStyle
-                        .copyWith(fontWeight: pw.FontWeight.bold)),
+                pw.Text(
+                  title,
+                  style: pw.Theme.of(context).defaultTextStyle.copyWith(
+                        fontWeight: pw.FontWeight.bold,
+                        fontFamily: 'OpenSans-Regular',
+                      ),
+                ),
                 pw.Spacer(),
                 if (icon != null) pw.Icon(icon!, color: lightGreen, size: 18),
               ]),
@@ -261,7 +298,12 @@ class _Block extends pw.StatelessWidget {
             child: pw.Column(
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
                 children: <pw.Widget>[
-                  pw.Lorem(length: 20),
+                  pw.Lorem(
+                    length: 20,
+                    style: const pw.TextStyle(
+                      fontFamily: 'OpenSans-Regular',
+                    ),
+                  ),
                 ]),
           ),
         ]);
@@ -285,6 +327,9 @@ class _Category extends pw.StatelessWidget {
       child: pw.Text(
         title,
         textScaleFactor: 1.5,
+        style: const pw.TextStyle(
+          fontFamily: 'OpenSans-Regular',
+        ),
       ),
     );
   }
@@ -325,6 +370,9 @@ class _Percent extends pw.StatelessWidget {
               child: pw.Text(
                 '${(value * 100).round().toInt()}%',
                 textScaleFactor: fontSize,
+                style: const pw.TextStyle(
+                  fontFamily: 'OpenSans-Regular',
+                ),
               ),
             ),
             pw.CircularProgressIndicator(

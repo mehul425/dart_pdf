@@ -312,8 +312,8 @@ class TextStyle {
     return copyWith(
       color: other.color,
       fontNormal: other.fontNormal,
+      fontFamily: other.fontFamily,
       fontList: fontList,
-      fontFamily: fontFamily,
       fontFallback: [...other.fontFallback, ...fontFallback],
       fontSize: other.fontSize,
       fontWeight: other.fontWeight,
@@ -353,7 +353,7 @@ class TextStyle {
 
   @override
   String toString() =>
-      'TextStyle(color:$color font:$fontNormal size:$fontSize weight:$fontWeight style:$fontStyle letterSpacing:$letterSpacing wordSpacing:$wordSpacing lineSpacing:$lineSpacing height:$height background:$background decoration:$decoration decorationColor:$decorationColor decorationStyle:$decorationStyle decorationThickness:$decorationThickness, renderingMode:$renderingMode)';
+      'TextStyle(color:$color fontFamily:$fontFamily size:$fontSize weight:$fontWeight style:$fontStyle letterSpacing:$letterSpacing wordSpacing:$wordSpacing lineSpacing:$lineSpacing height:$height background:$background decoration:$decoration decorationColor:$decorationColor decorationStyle:$decorationStyle decorationThickness:$decorationThickness, renderingMode:$renderingMode)';
 }
 
 class InheritedDirectionality extends Inherited {
