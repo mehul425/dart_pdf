@@ -216,6 +216,7 @@ void main() {
         headerStyle: TextStyle(
           color: PdfColors.white,
           fontWeight: FontWeight.bold,
+          fontFamily:'Helvetica',
         ),
         rowDecoration: const BoxDecoration(
           border: Border(
@@ -238,7 +239,7 @@ void main() {
   test('Table fromTextArray with directionality', () {
     pdf.addPage(Page(
       theme: ThemeData.withFont(
-        base: loadFont('hacen-tunisia.ttf'),
+        // base: loadFont('hacen-tunisia.ttf'),
       ),
       build: (Context context) => Directionality(
         textDirection: TextDirection.rtl,

@@ -90,6 +90,7 @@ class ChoiceField extends StatelessWidget with AnnotationAppearance {
     required this.items,
     this.value,
   });
+
   final String name;
   final TextStyle? textStyle;
   final double width;
@@ -107,7 +108,10 @@ class ChoiceField extends StatelessWidget with AnnotationAppearance {
       textColor: _textStyle.color!,
       fieldName: name,
       value: value,
-      font: _textStyle.font!.getFont(context),
+      font: _textStyle.fontList
+          .firstWhere((element) => element.name == _textStyle.fontFamily)
+          .font
+          .getFont(context),
       fontSize: _textStyle.fontSize!,
       items: items,
       rect: pdfRect,
@@ -234,7 +238,10 @@ class FlatButton extends SingleChildWidget with AnnotationAppearance {
     required this.name,
   })  : _childDown = Container(
           child: DefaultTextStyle(
-            style: TextStyle(color: textColor),
+            style: TextStyle(
+              color: textColor,
+              fontFamily: 'Helvetica',
+            ),
             child: child,
           ),
           decoration: decoration ??
@@ -247,7 +254,10 @@ class FlatButton extends SingleChildWidget with AnnotationAppearance {
         ),
         _childRollover = Container(
           child: DefaultTextStyle(
-            style: TextStyle(color: textColor),
+            style: TextStyle(
+              color: textColor,
+              fontFamily: 'Helvetica',
+            ),
             child: child,
           ),
           decoration: decoration ??
@@ -261,7 +271,10 @@ class FlatButton extends SingleChildWidget with AnnotationAppearance {
         super(
           child: Container(
             child: DefaultTextStyle(
-              style: TextStyle(color: textColor),
+              style: TextStyle(
+                color: textColor,
+                fontFamily: 'Helvetica',
+              ),
               child: child,
             ),
             decoration: decoration ??
@@ -369,7 +382,10 @@ class TextField extends StatelessWidget with AnnotationAppearance {
       fieldFlags: fieldFlags,
       value: value,
       defaultValue: defaultValue,
-      font: _textStyle.font!.getFont(context),
+      font: _textStyle.fontList
+          .firstWhere((element) => element.name == _textStyle.fontFamily)
+          .font
+          .getFont(context),
       fontSize: _textStyle.fontSize!,
       textColor: _textStyle.color!,
     );

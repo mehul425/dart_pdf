@@ -53,19 +53,23 @@ Future<Uint8List> generateResume(PdfPageFormat format, CustomData data) async {
                     child: pw.Column(
                       crossAxisAlignment: pw.CrossAxisAlignment.start,
                       children: <pw.Widget>[
-                        pw.Text('Parnella Charlesbois',
-                            textScaleFactor: 2,
-                            style: pw.Theme.of(context)
-                                .defaultTextStyle
-                                .copyWith(fontWeight: pw.FontWeight.bold)),
+                        pw.Text(
+                          'Parnella Charlesbois'.toUpperCase(),
+                          textScaleFactor: 2,
+                          style: pw.Theme.of(context).defaultTextStyle.copyWith(
+                                fontWeight: pw.FontWeight.bold,
+                                fontFamily:  'Castoro-Regular',
+                              ),
+                        ),
                         pw.Padding(padding: const pw.EdgeInsets.only(top: 10)),
                         pw.Text('Electrotyper',
                             textScaleFactor: 1.2,
-                            style: pw.Theme.of(context)
-                                .defaultTextStyle
-                                .copyWith(
-                                    fontWeight: pw.FontWeight.bold,
-                                    color: green)),
+                            style:
+                                pw.Theme.of(context).defaultTextStyle.copyWith(
+                                      fontWeight: pw.FontWeight.bold,
+                                      color: green,
+                                      fontFamily: 'OpenSans-Regular',
+                                    )),
                         pw.Padding(padding: const pw.EdgeInsets.only(top: 20)),
                         pw.Row(
                           crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -141,13 +145,13 @@ Future<Uint8List> generateResume(PdfPageFormat format, CustomData data) async {
                           _Percent(
                               size: 60, value: .4, title: pw.Text('Excel')),
                         ]),
-                        pw.BarcodeWidget(
-                          data: 'Parnella Charlesbois',
-                          width: 60,
-                          height: 60,
-                          barcode: pw.Barcode.qrCode(),
-                          drawText: false,
-                        ),
+                        // pw.BarcodeWidget(
+                        //   data: 'Parnella Charlesbois',
+                        //   width: 60,
+                        //   height: 60,
+                        //   barcode: pw.Barcode.qrCode(),
+                        //   drawText: false,
+                        // ),
                       ],
                     ),
                   ),
@@ -173,8 +177,17 @@ Future<pw.PageTheme> _myPageTheme(PdfPageFormat format) async {
   return pw.PageTheme(
     pageFormat: format,
     theme: pw.ThemeData.withFont(
-      base: await PdfGoogleFonts.openSansRegular(),
-      bold: await PdfGoogleFonts.openSansBold(),
+      name: 'OpenSans-Regular',
+      fontList: [
+        pw.FontData(
+          font: await PdfGoogleFonts.openSansRegular(),
+          name: 'OpenSans-Regular',
+        ),
+        pw.FontData(
+          font: await PdfGoogleFonts.castoroRegular(),
+          name: 'Castoro-Regular',
+        ),
+      ],
       icons: [
         pw.FontData(
           font: await PdfGoogleFonts.materialIcons(),
@@ -345,6 +358,7 @@ class _UrlText extends pw.StatelessWidget {
           style: const pw.TextStyle(
             decoration: pw.TextDecoration.underline,
             color: PdfColors.blue,
+            fontFamily: 'OpenSans-Regular',
           )),
     );
   }

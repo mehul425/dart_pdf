@@ -76,7 +76,13 @@ Future<void> main() async {
                 child: Text(
                   'Hello World!',
                   style: TextStyle(
-                    font: Font.helveticaBold(),
+                    fontList: [
+                      FontData(
+                        font: Font.helveticaBold(),
+                        name: 'Helvetica-Bold',
+                      )
+                    ],
+                    fontFamily: 'Helvetica-Bold',
                     fontSize: 50 * px,
                   ),
                 ),
@@ -174,17 +180,44 @@ class SyntaxHighlighterStyle {
 
   factory SyntaxHighlighterStyle.dark() => SyntaxHighlighterStyle(
         baseStyle: TextStyle(
-          font: Font.courierBold(),
+          fontList: [
+            FontData(
+              font: Font.courierBold(),
+              name: 'Courier-Bold',
+            )
+          ],
           color: PdfColors.white,
           fontSize: 10 * px,
+          fontFamily: 'Courier-Bold',
         ),
-        numberStyle: TextStyle(color: PdfColors.purple300),
-        commentStyle: TextStyle(color: PdfColors.green600),
-        keywordStyle: TextStyle(color: PdfColors.blue600),
-        stringStyle: TextStyle(color: PdfColors.orange400),
-        punctuationStyle: TextStyle(color: PdfColors.pink),
-        classStyle: TextStyle(color: PdfColors.cyan),
-        constantStyle: TextStyle(color: PdfColors.pink),
+        numberStyle: TextStyle(
+          color: PdfColors.purple300,
+          fontFamily: 'Courier-Bold',
+        ),
+        commentStyle: TextStyle(
+          color: PdfColors.green600,
+          fontFamily: 'Courier-Bold',
+        ),
+        keywordStyle: TextStyle(
+          color: PdfColors.blue600,
+          fontFamily: 'Courier-Bold',
+        ),
+        stringStyle: TextStyle(
+          color: PdfColors.orange400,
+          fontFamily: 'Courier-Bold',
+        ),
+        punctuationStyle: TextStyle(
+          color: PdfColors.pink,
+          fontFamily: 'Courier-Bold',
+        ),
+        classStyle: TextStyle(
+          color: PdfColors.cyan,
+          fontFamily: 'Courier-Bold',
+        ),
+        constantStyle: TextStyle(
+          color: PdfColors.pink,
+          fontFamily: 'Courier-Bold',
+        ),
       );
 }
 
@@ -470,6 +503,7 @@ enum _HighlightType {
 
 class _HighlightSpan {
   _HighlightSpan(this.type, this.start, this.end);
+
   final _HighlightType type;
   final int start;
   final int end;

@@ -51,8 +51,13 @@ Future<Uint8List> generateReport(
   final document = pw.Document();
 
   final theme = pw.ThemeData.withFont(
-    base: await PdfGoogleFonts.openSansRegular(),
-    bold: await PdfGoogleFonts.openSansBold(),
+    name: 'OpenSans-Regular',
+    fontList: [
+      pw.FontData(
+        font: await PdfGoogleFonts.openSansRegular(),
+        name: 'OpenSans-Regular',
+      ),
+    ],
   );
 
   // Top bar chart
@@ -162,9 +167,10 @@ Future<Uint8List> generateReport(
         (dataTable[index][1] as num) - (dataTable[index][2] as num),
       ],
     ),
-    headerStyle: pw.TextStyle(
+    headerStyle: const pw.TextStyle(
       color: PdfColors.white,
       fontWeight: pw.FontWeight.bold,
+      fontFamily: 'OpenSans-Regular',
     ),
     headerDecoration: const pw.BoxDecoration(
       color: baseColor,
@@ -194,6 +200,7 @@ Future<Uint8List> generateReport(
                 style: const pw.TextStyle(
                   color: baseColor,
                   fontSize: 40,
+                  fontFamily: 'OpenSans-Regular',
                 )),
             pw.Divider(thickness: 4),
             pw.Expanded(flex: 3, child: chart1),
@@ -213,6 +220,7 @@ Future<Uint8List> generateReport(
                       style: const pw.TextStyle(
                         color: baseColor,
                         fontSize: 16,
+                        fontFamily: 'OpenSans-Regular',
                       ),
                     ),
                   ),
@@ -233,6 +241,7 @@ Future<Uint8List> generateReport(
                           style: const pw.TextStyle(
                             color: baseColor,
                             fontSize: 16,
+                            fontFamily: 'OpenSans-Regular',
                           ),
                         ),
                       ),
@@ -276,6 +285,7 @@ Future<Uint8List> generateReport(
                   style: const pw.TextStyle(
                     color: baseColor,
                     fontSize: 20,
+                    fontFamily: 'OpenSans-Regular',
                   ),
                 ),
                 grid: pw.PieGrid(),
@@ -288,7 +298,10 @@ Future<Uint8List> generateReport(
                     legend: '${data[0]}\n$pct%',
                     value: value,
                     color: color,
-                    legendStyle: const pw.TextStyle(fontSize: 10),
+                    legendStyle: const pw.TextStyle(
+                      fontSize: 10,
+                      fontFamily: 'OpenSans-Regular',
+                    ),
                   );
                 }),
               ),

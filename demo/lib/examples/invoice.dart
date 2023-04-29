@@ -146,10 +146,10 @@ class Invoice {
                     child: pw.Text(
                       'INVOICE',
                       style: pw.TextStyle(
-                        color: baseColor,
-                        fontWeight: pw.FontWeight.bold,
-                        fontSize: 40,
-                      ),
+                          color: baseColor,
+                          fontWeight: pw.FontWeight.bold,
+                          fontSize: 40,
+                          fontFamily: 'Roboto-Bold'),
                     ),
                   ),
                   pw.Container(
@@ -164,9 +164,9 @@ class Invoice {
                     height: 50,
                     child: pw.DefaultTextStyle(
                       style: pw.TextStyle(
-                        color: _accentTextColor,
-                        fontSize: 12,
-                      ),
+                          color: _accentTextColor,
+                          fontSize: 12,
+                          fontFamily: 'Roboto-Regular'),
                       child: pw.GridView(
                         crossAxisCount: 2,
                         children: [
@@ -223,9 +223,7 @@ class Invoice {
         pw.Text(
           'Page ${context.pageNumber}/${context.pagesCount}',
           style: const pw.TextStyle(
-            fontSize: 12,
-            color: PdfColors.white,
-          ),
+              fontSize: 12, color: PdfColors.white, fontFamily: 'Roboto-Regular'),
         ),
       ],
     );
@@ -236,9 +234,12 @@ class Invoice {
     return pw.PageTheme(
       pageFormat: pageFormat,
       theme: pw.ThemeData.withFont(
-        base: base,
-        bold: bold,
-        italic: italic,
+        name: 'Roboto-Regular',
+        fontList: [
+          pw.FontData(font: base, name: 'Roboto-Regular'),
+          pw.FontData(font: bold, name: 'Roboto-Bold'),
+          pw.FontData(font: italic, name: 'Roboto-Italic'),
+        ],
       ),
       buildBackground: (context) => pw.FullPage(
         ignoreMargins: true,
@@ -259,9 +260,9 @@ class Invoice {
               child: pw.Text(
                 'Total: ${_formatCurrency(_grandTotal)}',
                 style: pw.TextStyle(
-                  color: baseColor,
-                  fontStyle: pw.FontStyle.italic,
-                ),
+                    color: baseColor,
+                    fontStyle: pw.FontStyle.italic,
+                    fontFamily: 'Roboto-Italic'),
               ),
             ),
           ),
@@ -274,11 +275,11 @@ class Invoice {
                 height: 70,
                 child: pw.Text(
                   'Invoice to:',
-                  style: pw.TextStyle(
-                    color: _darkColor,
-                    fontWeight: pw.FontWeight.bold,
-                    fontSize: 12,
-                  ),
+                  style: const pw.TextStyle(
+                      color: _darkColor,
+                      fontWeight: pw.FontWeight.bold,
+                      fontSize: 12,
+                      fontFamily: 'Roboto-Bold'),
                 ),
               ),
               pw.Expanded(
@@ -287,24 +288,23 @@ class Invoice {
                   child: pw.RichText(
                       text: pw.TextSpan(
                           text: '$customerName\n',
-                          style: pw.TextStyle(
-                            color: _darkColor,
-                            fontWeight: pw.FontWeight.bold,
-                            fontSize: 12,
-                          ),
+                          style: const pw.TextStyle(
+                              color: _darkColor,
+                              fontWeight: pw.FontWeight.bold,
+                              fontSize: 12,
+                              fontFamily: 'Roboto-Bold'),
                           children: [
                         const pw.TextSpan(
                           text: '\n',
-                          style: pw.TextStyle(
-                            fontSize: 5,
-                          ),
+                          style:
+                              pw.TextStyle(fontSize: 5, fontFamily: 'Roboto-Regular'),
                         ),
                         pw.TextSpan(
                           text: customerAddress,
-                          style: pw.TextStyle(
-                            fontWeight: pw.FontWeight.normal,
-                            fontSize: 10,
-                          ),
+                          style: const pw.TextStyle(
+                              fontWeight: pw.FontWeight.normal,
+                              fontSize: 10,
+                              fontFamily: 'Roboto-Regular'),
                         ),
                       ])),
                 ),
@@ -327,28 +327,28 @@ class Invoice {
             children: [
               pw.Text(
                 'Thank you for your business',
-                style: pw.TextStyle(
-                  color: _darkColor,
-                  fontWeight: pw.FontWeight.bold,
-                ),
+                style: const pw.TextStyle(
+                    color: _darkColor,
+                    fontWeight: pw.FontWeight.bold,
+                    fontFamily: 'Roboto-Bold'),
               ),
               pw.Container(
                 margin: const pw.EdgeInsets.only(top: 20, bottom: 8),
                 child: pw.Text(
                   'Payment Info:',
                   style: pw.TextStyle(
-                    color: baseColor,
-                    fontWeight: pw.FontWeight.bold,
-                  ),
+                      color: baseColor,
+                      fontWeight: pw.FontWeight.bold,
+                      fontFamily: 'Roboto-Bold'),
                 ),
               ),
               pw.Text(
                 paymentInfo,
                 style: const pw.TextStyle(
-                  fontSize: 8,
-                  lineSpacing: 5,
-                  color: _darkColor,
-                ),
+                    fontSize: 8,
+                    lineSpacing: 5,
+                    color: _darkColor,
+                    fontFamily: 'Roboto-Regular'),
               ),
             ],
           ),
@@ -357,9 +357,7 @@ class Invoice {
           flex: 1,
           child: pw.DefaultTextStyle(
             style: const pw.TextStyle(
-              fontSize: 10,
-              color: _darkColor,
-            ),
+                fontSize: 10, color: _darkColor, fontFamily: 'Roboto-Regular'),
             child: pw.Column(
               crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
@@ -381,10 +379,10 @@ class Invoice {
                 pw.Divider(color: accentColor),
                 pw.DefaultTextStyle(
                   style: pw.TextStyle(
-                    color: baseColor,
-                    fontSize: 14,
-                    fontWeight: pw.FontWeight.bold,
-                  ),
+                      color: baseColor,
+                      fontSize: 14,
+                      fontWeight: pw.FontWeight.bold,
+                      fontFamily: 'Roboto-Bold'),
                   child: pw.Row(
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: [
@@ -417,20 +415,20 @@ class Invoice {
                 child: pw.Text(
                   'Terms & Conditions',
                   style: pw.TextStyle(
-                    fontSize: 12,
-                    color: baseColor,
-                    fontWeight: pw.FontWeight.bold,
-                  ),
+                      fontSize: 12,
+                      color: baseColor,
+                      fontWeight: pw.FontWeight.bold,
+                      fontFamily: 'Roboto-Bold'),
                 ),
               ),
               pw.Text(
                 pw.LoremText().paragraph(40),
                 textAlign: pw.TextAlign.justify,
                 style: const pw.TextStyle(
-                  fontSize: 6,
-                  lineSpacing: 2,
-                  color: _darkColor,
-                ),
+                    fontSize: 6,
+                    lineSpacing: 2,
+                    color: _darkColor,
+                    fontFamily: 'Roboto-Regular'),
               ),
             ],
           ),
@@ -468,14 +466,12 @@ class Invoice {
         4: pw.Alignment.centerRight,
       },
       headerStyle: pw.TextStyle(
-        color: _baseTextColor,
-        fontSize: 10,
-        fontWeight: pw.FontWeight.bold,
-      ),
+          color: _baseTextColor,
+          fontSize: 10,
+          fontWeight: pw.FontWeight.bold,
+          fontFamily: 'Roboto-Bold'),
       cellStyle: const pw.TextStyle(
-        color: _darkColor,
-        fontSize: 10,
-      ),
+          color: _darkColor, fontSize: 10, fontFamily: 'Roboto-Regular'),
       rowDecoration: pw.BoxDecoration(
         border: pw.Border(
           bottom: pw.BorderSide(
@@ -520,6 +516,7 @@ class Product {
   final String productName;
   final double price;
   final int quantity;
+
   double get total => price * quantity;
 
   String getIndex(int index) {

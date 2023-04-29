@@ -15,6 +15,7 @@
  */
 
 import 'package:meta/meta.dart';
+import 'package:pdf/src/widgets/theme.dart';
 
 import '../../pdf.dart';
 import 'decoration.dart';
@@ -106,12 +107,10 @@ class TextStyle {
   const TextStyle({
     this.inherit = true,
     this.color,
-    Font? font,
-    Font? fontNormal,
-    Font? fontBold,
-    Font? fontItalic,
-    Font? fontBoldItalic,
+    required this.fontFamily,
+    this.fontNormal,
     this.fontFallback = const [],
+    this.fontList = const [],
     this.fontSize,
     this.fontWeight,
     this.fontStyle,
@@ -126,10 +125,6 @@ class TextStyle {
     this.decorationThickness,
     this.renderingMode,
   })  : assert(inherit || color != null),
-        assert(inherit || fontNormal != null),
-        assert(inherit || fontBold != null),
-        assert(inherit || fontItalic != null),
-        assert(inherit || fontBoldItalic != null),
         assert(inherit || fontSize != null),
         assert(inherit || fontWeight != null),
         assert(inherit || fontStyle != null),
@@ -140,33 +135,20 @@ class TextStyle {
         assert(inherit || decoration != null),
         assert(inherit || decorationStyle != null),
         assert(inherit || decorationThickness != null),
-        assert(inherit || renderingMode != null),
-        fontNormal = fontNormal ??
-            (fontStyle != FontStyle.italic && fontWeight != FontWeight.bold
-                ? font
-                : null),
-        fontBold = fontBold ??
-            (fontStyle != FontStyle.italic && fontWeight == FontWeight.bold
-                ? font
-                : null),
-        fontItalic = fontItalic ??
-            (fontStyle == FontStyle.italic && fontWeight != FontWeight.bold
-                ? font
-                : null),
-        fontBoldItalic = fontBoldItalic ??
-            (fontStyle == FontStyle.italic && fontWeight == FontWeight.bold
-                ? font
-                : null);
+        assert(inherit || renderingMode != null);
 
   factory TextStyle.defaultStyle() {
     return TextStyle(
       inherit: false,
       color: PdfColors.black,
-      fontNormal: Font.helvetica(),
-      fontBold: Font.helveticaBold(),
-      fontItalic: Font.helveticaOblique(),
-      fontBoldItalic: Font.helveticaBoldOblique(),
+      fontFamily: 'Helvetica',
       fontFallback: const [],
+      fontList: [
+        FontData(
+          font: Font.helvetica(),
+          name: 'Helvetica',
+        )
+      ],
       fontSize: _defaultFontSize,
       fontWeight: FontWeight.normal,
       fontStyle: FontStyle.normal,
@@ -186,16 +168,14 @@ class TextStyle {
 
   final PdfColor? color;
 
+  final String fontFamily;
+
   final Font? fontNormal;
-
-  final Font? fontBold;
-
-  final Font? fontItalic;
-
-  final Font? fontBoldItalic;
 
   /// The ordered list of font to fall back on when a glyph cannot be found in a higher priority font.
   final List<Font> fontFallback;
+
+  final List<FontData> fontList;
 
   /// font height, in pdf unit
   final double? fontSize;
@@ -233,12 +213,10 @@ class TextStyle {
 
   TextStyle copyWith({
     PdfColor? color,
-    Font? font,
+    String? fontFamily,
     Font? fontNormal,
-    Font? fontBold,
-    Font? fontItalic,
-    Font? fontBoldItalic,
     List<Font>? fontFallback,
+    List<FontData>? fontList,
     double? fontSize,
     FontWeight? fontWeight,
     FontStyle? fontStyle,
@@ -256,12 +234,10 @@ class TextStyle {
     return TextStyle(
       inherit: inherit,
       color: color ?? this.color,
-      font: font ?? this.font,
+      fontFamily: fontFamily ?? this.fontFamily,
       fontNormal: fontNormal ?? this.fontNormal,
-      fontBold: fontBold ?? this.fontBold,
-      fontItalic: fontItalic ?? this.fontItalic,
-      fontBoldItalic: fontBoldItalic ?? this.fontBoldItalic,
       fontFallback: fontFallback ?? this.fontFallback,
+      fontList: fontList ?? this.fontList,
       fontSize: fontSize ?? this.fontSize,
       fontWeight: fontWeight ?? this.fontWeight,
       fontStyle: fontStyle ?? this.fontStyle,
@@ -282,11 +258,8 @@ class TextStyle {
   /// properties.
   TextStyle apply({
     PdfColor? color,
-    Font? font,
+    String? fontFamily,
     Font? fontNormal,
-    Font? fontBold,
-    Font? fontItalic,
-    Font? fontBoldItalic,
     double fontSizeFactor = 1.0,
     double fontSizeDelta = 0.0,
     double letterSpacingFactor = 1.0,
@@ -307,11 +280,8 @@ class TextStyle {
     return TextStyle(
       inherit: inherit,
       color: color ?? this.color,
-      font: font ?? this.font,
+      fontFamily: fontFamily ?? this.fontFamily,
       fontNormal: fontNormal ?? this.fontNormal,
-      fontBold: fontBold ?? this.fontBold,
-      fontItalic: fontItalic ?? this.fontItalic,
-      fontBoldItalic: fontBoldItalic ?? this.fontBoldItalic,
       fontSize:
           fontSize == null ? null : fontSize! * fontSizeFactor + fontSizeDelta,
       fontWeight: fontWeight,
@@ -341,11 +311,9 @@ class TextStyle {
 
     return copyWith(
       color: other.color,
-      font: other.font,
       fontNormal: other.fontNormal,
-      fontBold: other.fontBold,
-      fontItalic: other.fontItalic,
-      fontBoldItalic: other.fontBoldItalic,
+      fontList: fontList,
+      fontFamily: fontFamily,
       fontFallback: [...other.fontFallback, ...fontFallback],
       fontSize: other.fontSize,
       fontWeight: other.fontWeight,
@@ -363,29 +331,29 @@ class TextStyle {
     );
   }
 
-  Font? get font {
-    if (fontWeight != FontWeight.bold) {
-      if (fontStyle != FontStyle.italic) {
-        // normal
-        return fontNormal ?? fontBold ?? fontItalic ?? fontBoldItalic;
-      } else {
-        // italic
-        return fontItalic ?? fontNormal ?? fontBold ?? fontBoldItalic;
-      }
-    } else {
-      if (fontStyle != FontStyle.italic) {
-        // bold
-        return fontBold ?? fontNormal ?? fontItalic ?? fontBoldItalic;
-      } else {
-        // bold + italic
-        return fontBoldItalic ?? fontBold ?? fontItalic ?? fontNormal;
-      }
-    }
-  }
+  // Font? get font {
+  //   if (fontWeight != FontWeight.bold) {
+  //     if (fontStyle != FontStyle.italic) {
+  //       // normal
+  //       return fontNormal ?? fontBold ?? fontItalic ?? fontBoldItalic;
+  //     } else {
+  //       // italic
+  //       return fontItalic ?? fontNormal ?? fontBold ?? fontBoldItalic;
+  //     }
+  //   } else {
+  //     if (fontStyle != FontStyle.italic) {
+  //       // bold
+  //       return fontBold ?? fontNormal ?? fontItalic ?? fontBoldItalic;
+  //     } else {
+  //       // bold + italic
+  //       return fontBoldItalic ?? fontBold ?? fontItalic ?? fontNormal;
+  //     }
+  //   }
+  // }
 
   @override
   String toString() =>
-      'TextStyle(color:$color font:$font size:$fontSize weight:$fontWeight style:$fontStyle letterSpacing:$letterSpacing wordSpacing:$wordSpacing lineSpacing:$lineSpacing height:$height background:$background decoration:$decoration decorationColor:$decorationColor decorationStyle:$decorationStyle decorationThickness:$decorationThickness, renderingMode:$renderingMode)';
+      'TextStyle(color:$color font:$fontNormal size:$fontSize weight:$fontWeight style:$fontStyle letterSpacing:$letterSpacing wordSpacing:$wordSpacing lineSpacing:$lineSpacing height:$height background:$background decoration:$decoration decorationColor:$decorationColor decorationStyle:$decorationStyle decorationThickness:$decorationThickness, renderingMode:$renderingMode)';
 }
 
 class InheritedDirectionality extends Inherited {

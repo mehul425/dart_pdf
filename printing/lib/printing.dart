@@ -36,20 +36,17 @@ Future<void> pdfDefaultTheme() async {
   }
 
   final base = await PdfGoogleFonts.openSansRegular();
-  final bold = await PdfGoogleFonts.openSansBold();
-  final italic = await PdfGoogleFonts.openSansItalic();
-  final boldItalic = await PdfGoogleFonts.openSansBoldItalic();
   final emoji = await PdfGoogleFonts.notoColorEmoji();
   final icons = await PdfGoogleFonts.materialIcons();
 
   ThemeData.buildThemeData = () {
     return ThemeData.withFont(
-      base: base,
-      bold: bold,
-      italic: italic,
-      boldItalic: boldItalic,
+      // base: base,
       icons: [FontData(font: icons, name: 'MaterialIcons')],
-      fontFallback: [emoji, base],
+      fontFallback: [
+        emoji,
+        base,
+      ],
     );
   };
 }

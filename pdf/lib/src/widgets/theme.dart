@@ -108,19 +108,14 @@ class ThemeData extends Inherited {
         assert(maxLines == null || maxLines > 0);
 
   factory ThemeData.withFont({
-    Font? base,
-    Font? bold,
-    Font? italic,
-    Font? boldItalic,
+    String? name,
     List<FontData>? icons,
+    List<FontData>? fontList,
     List<Font>? fontFallback,
   }) {
     final defaultStyle = TextStyle.defaultStyle().copyWith(
-      font: base,
-      fontNormal: base,
-      fontBold: bold,
-      fontItalic: italic,
-      fontBoldItalic: boldItalic,
+      fontList: fontList,
+      fontFamily: name,
       fontFallback: fontFallback,
     );
     final fontSize = defaultStyle.fontSize!;

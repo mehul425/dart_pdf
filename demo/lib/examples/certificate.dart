@@ -31,9 +31,8 @@ Future<Uint8List> generateCertificate(
   final pdf = pw.Document();
 
   final libreBaskerville = await PdfGoogleFonts.libreBaskervilleRegular();
-  final libreBaskervilleItalic = await PdfGoogleFonts.libreBaskervilleItalic();
-  final libreBaskervilleBold = await PdfGoogleFonts.libreBaskervilleBold();
   final robotoLight = await PdfGoogleFonts.robotoLight();
+
   final medail = await rootBundle.loadString('assets/medail.svg');
   final swirls = await rootBundle.loadString('assets/swirls.svg');
   final swirls1 = await rootBundle.loadString('assets/swirls1.svg');
@@ -47,31 +46,33 @@ Future<Uint8List> generateCertificate(
         children: [
           pw.Spacer(flex: 2),
           pw.RichText(
-            text: pw.TextSpan(
+            text: const pw.TextSpan(
                 style: pw.TextStyle(
                   fontWeight: pw.FontWeight.bold,
                   fontSize: 25,
+                  fontFamily: 'LibreBarnesville-Regular',
                 ),
                 children: [
-                  const pw.TextSpan(text: 'CERTIFICATE '),
+                  pw.TextSpan(text: 'CERTIFICATE '),
                   pw.TextSpan(
                     text: 'of',
                     style: pw.TextStyle(
                       fontStyle: pw.FontStyle.italic,
                       fontWeight: pw.FontWeight.normal,
+                      fontFamily: 'LibreBarnesville-Regular',
                     ),
                   ),
-                  const pw.TextSpan(text: ' ACHIEVEMENT'),
+                  pw.TextSpan(text: ' ACHIEVEMENT'),
                 ]),
           ),
           pw.Spacer(),
           pw.Text(
             'THIS ACKNOWLEDGES THAT',
-            style: pw.TextStyle(
-              font: robotoLight,
+            style: const pw.TextStyle(
               fontSize: 10,
               letterSpacing: 2,
               wordSpacing: 2,
+              fontFamily: 'Roboto-Light',
             ),
           ),
           pw.SizedBox(
@@ -81,9 +82,10 @@ Future<Uint8List> generateCertificate(
           pw.Text(
             data.name,
             textAlign: pw.TextAlign.center,
-            style: pw.TextStyle(
+            style: const pw.TextStyle(
               fontWeight: pw.FontWeight.bold,
               fontSize: 20,
+              fontFamily: 'LibreBarnesville-Regular',
             ),
           ),
           pw.SizedBox(
@@ -92,11 +94,11 @@ Future<Uint8List> generateCertificate(
           ),
           pw.Text(
             'HAS SUCCESSFULLY COMPLETED THE',
-            style: pw.TextStyle(
-              font: robotoLight,
+            style: const pw.TextStyle(
               fontSize: 10,
               letterSpacing: 2,
               wordSpacing: 2,
+              fontFamily: 'Roboto-Light',
             ),
           ),
           pw.SizedBox(height: 10),
@@ -113,6 +115,7 @@ Future<Uint8List> generateCertificate(
                   'Flutter PDF Demo',
                   style: const pw.TextStyle(
                     fontSize: 10,
+                    fontFamily: 'LibreBarnesville-Regular',
                   ),
                 ),
               ),
@@ -138,7 +141,10 @@ Future<Uint8List> generateCertificate(
               pw.Flexible(
                 child: pw.Text(
                   lorem.paragraph(40),
-                  style: const pw.TextStyle(fontSize: 6),
+                  style: const pw.TextStyle(
+                    fontSize: 6,
+                    fontFamily: 'LibreBarnesville-Regular',
+                  ),
                   textAlign: pw.TextAlign.justify,
                 ),
               ),
@@ -154,9 +160,11 @@ Future<Uint8List> generateCertificate(
       pageTheme: pw.PageTheme(
         pageFormat: pageFormat,
         theme: pw.ThemeData.withFont(
-          base: libreBaskerville,
-          italic: libreBaskervilleItalic,
-          bold: libreBaskervilleBold,
+          name: 'Roboto-Light',
+          fontList: [
+            pw.FontData(font: libreBaskerville, name: 'Roboto-Light'),
+            pw.FontData(font: robotoLight, name: 'LibreBarnesville-Regular')
+          ],
         ),
         buildBackground: (context) => pw.FullPage(
           ignoreMargins: true,

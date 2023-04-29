@@ -31,13 +31,13 @@ class IconData {
   /// Creates icon data.
   const IconData(
     this.codePoint,
-    this.name, {
+    this.fontFamily, {
     this.matchTextDirection = false,
   });
 
   /// The Unicode code point at which this icon is stored in the icon font.
   final int codePoint;
-  final String name;
+  final String fontFamily;
 
   /// Whether this icon should be automatically mirrored in right-to-left
   /// environments.
@@ -52,11 +52,11 @@ class IconThemeData {
     this.color,
     this.opacity,
     this.size,
-    required this.font,
+    required this.fontList,
   });
 
   /// Creates an icon them with some reasonable default values.
-  const IconThemeData.fallback(this.font)
+  const IconThemeData.fallback(this.fontList)
       : color = PdfColors.black,
         opacity = 1.0,
         size = 24.0;
@@ -67,13 +67,13 @@ class IconThemeData {
     PdfColor? color,
     double? opacity,
     double? size,
-    List<FontData>? font,
+    List<FontData>? fontList,
   }) {
     return IconThemeData(
       color: color ?? this.color,
       opacity: opacity ?? this.opacity,
       size: size ?? this.size,
-      font: font ?? this.font,
+      fontList: fontList ?? this.fontList,
     );
   }
 
@@ -87,7 +87,7 @@ class IconThemeData {
   final double? size;
 
   /// The font to use
-  final List<FontData> font;
+  final List<FontData> fontList;
 }
 
 /// A graphical icon widget drawn with a glyph from a font described in
@@ -120,9 +120,9 @@ class Icon extends StatelessWidget {
     final iconSize = size ?? iconTheme.size;
     final iconColor = color ?? iconTheme.color!;
     final iconOpacity = iconColor.alpha;
-    final iconFont = iconTheme.font
+    final iconFont = iconTheme.fontList
         .firstWhere(
-          (element) => element.name == icon.name,
+          (element) => element.name == icon.fontFamily,
         )
         .font;
 
@@ -133,7 +133,10 @@ class Icon extends StatelessWidget {
         style: TextStyle.defaultStyle().copyWith(
           color: iconColor,
           fontSize: iconSize,
-          fontNormal: iconFont,
+          fontFamily: iconFont.fontName,
+          fontList: [
+            FontData(font: iconFont, name: iconFont.fontName),
+          ],
         ),
       ),
     );

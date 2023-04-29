@@ -28,7 +28,7 @@ Future<Uint8List> generateDocument(
   final doc = pw.Document(pageMode: PdfPageMode.outlines);
 
   final font1 = await PdfGoogleFonts.openSansRegular();
-  final font2 = await PdfGoogleFonts.openSansBold();
+
   final shape = await rootBundle.loadString('assets/document.svg');
   final swirls = await rootBundle.loadString('assets/swirls2.svg');
 
@@ -45,8 +45,10 @@ Future<Uint8List> generateDocument(
         buildBackground: (context) =>
             pw.SvgImage(svg: shape, fit: pw.BoxFit.fill),
         theme: pw.ThemeData.withFont(
-          base: font1,
-          bold: font2,
+          name: 'OpenSans-Regular',
+          fontList: [
+            pw.FontData(font: font1, name: 'OpenSans-Regular'),
+          ],
         ),
       ),
       build: (context) {
@@ -63,17 +65,19 @@ Future<Uint8List> generateDocument(
                   text: pw.TextSpan(children: [
                 pw.TextSpan(
                   text: '${DateTime.now().year}\n',
-                  style: pw.TextStyle(
+                  style: const pw.TextStyle(
                     fontWeight: pw.FontWeight.bold,
                     color: PdfColors.grey600,
                     fontSize: 40,
+                    fontFamily: 'OpenSans-Regular',
                   ),
                 ),
-                pw.TextSpan(
+                const pw.TextSpan(
                   text: 'Portable Document Format',
                   style: pw.TextStyle(
                     fontWeight: pw.FontWeight.bold,
                     fontSize: 40,
+                    fontFamily: 'OpenSans-Regular',
                   ),
                 ),
               ])),
@@ -92,6 +96,7 @@ Future<Uint8List> generateDocument(
                     'https://wikipedia.org/wiki/PDF',
                     style: const pw.TextStyle(
                       color: PdfColors.pink100,
+                      fontFamily: 'OpenSans-Regular',
                     ),
                   ),
                 ),
@@ -106,8 +111,10 @@ Future<Uint8List> generateDocument(
   doc.addPage(
     pw.Page(
       theme: pw.ThemeData.withFont(
-        base: font1,
-        bold: font2,
+        name: 'OpenSans-Regular',
+        fontList: [
+          pw.FontData(font: font1, name: 'OpenSans-Regular'),
+        ],
       ),
       pageFormat: format.copyWith(marginBottom: 1.5 * PdfPageFormat.cm),
       orientation: pw.PageOrientation.portrait,
@@ -133,8 +140,10 @@ Future<Uint8List> generateDocument(
 
   doc.addPage(pw.MultiPage(
       theme: pw.ThemeData.withFont(
-        base: font1,
-        bold: font2,
+        name: 'OpenSans-Regular',
+        fontList: [
+          pw.FontData(font: font1, name: 'OpenSans-Regular'),
+        ],
       ),
       pageFormat: format.copyWith(marginBottom: 1.5 * PdfPageFormat.cm),
       orientation: pw.PageOrientation.portrait,

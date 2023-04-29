@@ -213,11 +213,13 @@ class PieDataSet extends Dataset {
             text: TextSpan(
               children: [TextSpan(text: legend!, style: legendStyle)],
               style: TextStyle(
-                  color: lp == PieLegendPosition.inside
-                      ? color!.isLight
-                          ? PdfColors.white
-                          : PdfColors.black
-                      : null),
+                color: lp == PieLegendPosition.inside
+                    ? color!.isLight
+                        ? PdfColors.white
+                        : PdfColors.black
+                    : null,
+                fontFamily: 'Helvetica',
+              ),
             ),
             textAlign: _legendAlign,
           );

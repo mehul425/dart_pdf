@@ -61,7 +61,10 @@ void main() {
   test('Text Widgets Unicode Quotes', () {
     pdf.addPage(Page(
         build: (Context context) => Text('Text containing ’ and ” works!',
-            style: TextStyle(font: ttf))));
+            style: TextStyle(
+              fontNormal: ttf,
+              fontFamily: 'Helvetica',
+            ))));
   });
 
   test('Text Widgets softWrap', () {
@@ -119,7 +122,12 @@ void main() {
     final widgets = <Widget>[];
     for (var spacing = 0.0; spacing < 10.0; spacing += 2.0) {
       widgets.add(
-        Text(para, style: TextStyle(font: ttf, lineSpacing: spacing)),
+        Text(para,
+            style: TextStyle(
+              fontNormal: ttf,
+              lineSpacing: spacing,
+              fontFamily: 'Helvetica',
+            )),
       );
       widgets.add(
         SizedBox(height: 30),
@@ -135,7 +143,12 @@ void main() {
     final widgets = <Widget>[];
     for (var spacing = 0.0; spacing < 10.0; spacing += 2.0) {
       widgets.add(
-        Text(para, style: TextStyle(font: ttf, wordSpacing: spacing)),
+        Text(para,
+            style: TextStyle(
+              fontNormal: ttf,
+              wordSpacing: spacing,
+              fontFamily: 'Helvetica',
+            )),
       );
       widgets.add(
         SizedBox(height: 30),
@@ -153,7 +166,11 @@ void main() {
       widgets.add(
         Text(
           '[$spacing] $para',
-          style: TextStyle(font: ttf, letterSpacing: spacing),
+          style: TextStyle(
+            fontNormal: ttf,
+            letterSpacing: spacing,
+            fontFamily: 'Helvetica',
+          ),
         ),
       );
       widgets.add(
@@ -171,8 +188,9 @@ void main() {
               Text(
                 para,
                 style: TextStyle(
-                  font: ttf,
+                  fontNormal: ttf,
                   background: const BoxDecoration(color: PdfColors.purple50),
+                  fontFamily: 'Helvetica',
                 ),
               ),
             ]));
@@ -199,10 +217,12 @@ void main() {
           Text(
             decoration.toString().replaceAll('.', ' '),
             style: TextStyle(
-                font: ttf,
-                decoration: decoration,
-                decorationColor: PdfColors.red,
-                decorationStyle: decorationStyle),
+              fontNormal: ttf,
+              decoration: decoration,
+              decorationColor: PdfColors.red,
+              decorationStyle: decorationStyle,
+              fontFamily: 'Helvetica',
+            ),
           ),
         );
         widgets.add(
@@ -224,10 +244,11 @@ void main() {
         TextSpan(
           text: word,
           style: TextStyle(
-              font: ttf,
-              fontSize: rnd.nextDouble() * 20 + 20,
-              color:
-                  PdfColors.primaries[rnd.nextInt(PdfColors.primaries.length)]),
+            fontNormal: ttf,
+            fontSize: rnd.nextDouble() * 20 + 20,
+            color: PdfColors.primaries[rnd.nextInt(PdfColors.primaries.length)],
+            fontFamily: 'Helvetica',
+          ),
         ),
       );
       spans.add(const TextSpan(text: ' '));
@@ -239,15 +260,20 @@ void main() {
                 text: TextSpan(
                   text: 'Hello ',
                   style: TextStyle(
-                    font: ttf,
+                    fontNormal: ttf,
                     fontSize: 20,
                     decoration: TextDecoration.underline,
+                    fontFamily: 'Helvetica',
                   ),
                   children: <InlineSpan>[
                     TextSpan(
                         text: 'bold',
                         style: TextStyle(
-                            font: ttfBold, fontSize: 40, color: PdfColors.blue),
+                          fontNormal: ttfBold,
+                          fontSize: 40,
+                          color: PdfColors.blue,
+                          fontFamily: 'Helvetica',
+                        ),
                         children: <InlineSpan>[
                           const TextSpan(text: '*', baseline: 20),
                           WidgetSpan(child: PdfLogo(), baseline: -10),
@@ -273,13 +299,17 @@ void main() {
         text: TextSpan(
           text: 'Hello ',
           style: TextStyle(
-            font: ttf,
+            fontNormal: ttf,
             fontSize: 20,
+            fontFamily: 'Helvetica',
           ),
           children: <InlineSpan>[
             TextSpan(
               text: '中文',
-              style: TextStyle(font: asian),
+              style: TextStyle(
+                fontNormal: asian,
+                fontFamily: 'Helvetica',
+              ),
             ),
             const TextSpan(
               text: ' world!',
@@ -328,7 +358,10 @@ void main() {
                 const TextSpan(text: ' '),
                 const TextSpan(
                   text: 'Underline',
-                  style: TextStyle(decoration: TextDecoration.underline),
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    fontFamily: 'Helvetica',
+                  ),
                 ),
                 const TextSpan(text: '. '),
                 TextSpan(text: para),
@@ -366,7 +399,8 @@ void main() {
           'Hello 🐈! Dancing 💃🏃',
           style: TextStyle(
             fontSize: 30,
-            fontFallback: [emoji],
+            fontFamily: 'Helvetica',
+            fontList: [FontData(font: emoji, name: "emoji")],
           ),
         ),
       ),

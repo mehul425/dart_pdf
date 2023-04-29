@@ -45,20 +45,18 @@ void main() {
 
   test('Theme FontStyle', () {
     final style = TextStyle(
-        font: roboto,
-        fontBold: openSansBold,
-        fontNormal: openSans,
-        fontItalic: notoSans,
-        fontBoldItalic: genyomintw,
-        fontWeight: FontWeight.bold,
-        fontSize: 20,
-        color: PdfColors.blue);
+      fontNormal: roboto,
+      fontWeight: FontWeight.bold,
+      fontSize: 20,
+      color: PdfColors.blue,
+      fontFamily: 'Helvetica',
+    );
 
     pdf.addPage(Page(
       build: (Context context) => ListView(
         children: <Widget>[
           Text(
-            style.font!.fontName,
+            style.fontNormal!.fontName,
             style: style,
           ),
         ],
@@ -67,7 +65,9 @@ void main() {
   });
 
   test('Theme Page 1', () {
-    final theme = ThemeData.withFont(base: roboto);
+    final theme = ThemeData.withFont(
+      // base: roboto,
+    );
 
     pdf.addPage(Page(
       theme: theme,
@@ -79,8 +79,14 @@ void main() {
 
   test('Theme Page 2', () {
     final theme = ThemeData.base().copyWith(
-      tableHeader: TextStyle(font: openSansBold),
-      tableCell: TextStyle(font: roboto),
+      tableHeader: TextStyle(
+        fontNormal: openSansBold,
+        fontFamily: 'Helvetica',
+      ),
+      tableCell: TextStyle(
+        fontNormal: roboto,
+        fontFamily: 'Helvetica',
+      ),
     );
 
     pdf.addPage(Page(
@@ -103,7 +109,7 @@ void main() {
             Text('Hello default'),
             Theme(
               data: ThemeData.withFont(
-                base: roboto,
+                // base: roboto,
               ),
               child: Text('Hello themed'),
             ),
@@ -119,7 +125,11 @@ void main() {
         orientation: PageOrientation.portrait,
         margin: const EdgeInsets.all(8.0),
         theme: ThemeData(
-          defaultTextStyle: TextStyle(font: Font.courier(), fontSize: 10.0),
+          defaultTextStyle: TextStyle(
+            fontNormal: Font.courier(),
+            fontSize: 10.0,
+            fontFamily: 'Helvetica',
+          ),
         ),
         build: (Context context) {
           return Center(child: Text('Text'));

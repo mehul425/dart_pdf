@@ -45,7 +45,10 @@ List<Widget> contentMultiPage(Context context) {
         height: 20,
         child: Text(
           'Hello World $n!',
-          style: const TextStyle(fontSize: 15),
+          style: const TextStyle(
+            fontSize: 15,
+            fontFamily: 'Helvetica',
+          ),
         )),
   );
 }
