@@ -108,14 +108,14 @@ class ThemeData extends Inherited {
         assert(maxLines == null || maxLines > 0);
 
   factory ThemeData.withFont({
-    String? name,
+    String? fontFamily,
     List<FontData>? icons,
     List<FontData>? fontList,
     List<Font>? fontFallback,
   }) {
     final defaultStyle = TextStyle.defaultStyle().copyWith(
       fontList: fontList,
-      fontFamily: name,
+      fontFamily: fontFamily,
       fontFallback: fontFallback,
     );
     final fontSize = defaultStyle.fontSize!;
