@@ -234,7 +234,7 @@ class Invoice {
     return pw.PageTheme(
       pageFormat: pageFormat,
       theme: pw.ThemeData.withFont(
-        name: 'Roboto-Regular',
+        fontFamily: 'Roboto-Regular',
         fontList: [
           pw.FontData(font: base, name: 'Roboto-Regular'),
           pw.FontData(font: bold, name: 'Roboto-Bold'),

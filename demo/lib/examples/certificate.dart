@@ -160,7 +160,7 @@ Future<Uint8List> generateCertificate(
       pageTheme: pw.PageTheme(
         pageFormat: pageFormat,
         theme: pw.ThemeData.withFont(
-          name: 'Roboto-Light',
+          fontFamily: 'Roboto-Light',
           fontList: [
             pw.FontData(font: libreBaskerville, name: 'Roboto-Light'),
             pw.FontData(font: robotoLight, name: 'LibreBarnesville-Regular')

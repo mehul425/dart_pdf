@@ -51,7 +51,7 @@ Future<Uint8List> generateReport(
   final document = pw.Document();
 
   final theme = pw.ThemeData.withFont(
-    name: 'OpenSans-Regular',
+    fontFamily: 'OpenSans-Regular',
     fontList: [
       pw.FontData(
         font: await PdfGoogleFonts.openSansRegular(),

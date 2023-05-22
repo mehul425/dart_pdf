@@ -198,7 +198,7 @@ Future<Uint8List> generateCalendar(
         pageFormat: pageFormat,
         orientation: PageOrientation.landscape,
         theme: ThemeData.withFont(
-          name: 'OpenSans-Regular',
+          fontFamily: 'OpenSans-Regular',
           fontList: [
             FontData(
               font: await PdfGoogleFonts.openSansRegular(),
