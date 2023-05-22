@@ -164,8 +164,7 @@ class WidgetWrapper extends pw.ImageProvider {
     }
 
     final repaintBoundary = RenderRepaintBoundary();
-    final view = WidgetsBinding.instance.window;
-    // final view = View.of(context);
+    final view = View.of(context);
 
     final renderView = RenderView(
       child: RenderPositionedBox(
@@ -174,8 +173,7 @@ class WidgetWrapper extends pw.ImageProvider {
           size:
               Size(computedConstraints.maxWidth, computedConstraints.maxHeight),
           devicePixelRatio: view.devicePixelRatio),
-      // view: view,
-      window: view,
+      view: view,
     );
 
     final pipelineOwner = PipelineOwner()..rootNode = renderView;
