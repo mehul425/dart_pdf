@@ -65,10 +65,10 @@ class PdfRasterImage extends ImageProvider<PdfRaster> {
     return ImageInfo(image: uiImage, scale: 1);
   }
 
-  @override
-  ImageStreamCompleter loadImage(PdfRaster key, ImageDecoderCallback decode) {
-    return OneFrameImageStreamCompleter(_loadAsync());
-  }
+  // @override
+  // ImageStreamCompleter loadImage(PdfRaster key, ImageDecoderCallback decode) {
+  //   return OneFrameImageStreamCompleter(_loadAsync());
+  // }
 
   @override
   Future<PdfRaster> obtainKey(ImageConfiguration configuration) async {
