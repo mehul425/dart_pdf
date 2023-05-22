@@ -45,7 +45,7 @@ Future<Uint8List> generateDocument(
         buildBackground: (context) =>
             pw.SvgImage(svg: shape, fit: pw.BoxFit.fill),
         theme: pw.ThemeData.withFont(
-          name: 'OpenSans-Regular',
+          fontFamily: 'OpenSans-Regular',
           fontList: [
             pw.FontData(font: font1, name: 'OpenSans-Regular'),
           ],
@@ -111,7 +111,7 @@ Future<Uint8List> generateDocument(
   doc.addPage(
     pw.Page(
       theme: pw.ThemeData.withFont(
-        name: 'OpenSans-Regular',
+        fontFamily: 'OpenSans-Regular',
         fontList: [
           pw.FontData(font: font1, name: 'OpenSans-Regular'),
         ],
@@ -140,7 +140,7 @@ Future<Uint8List> generateDocument(
 
   doc.addPage(pw.MultiPage(
       theme: pw.ThemeData.withFont(
-        name: 'OpenSans-Regular',
+        fontFamily: 'OpenSans-Regular',
         fontList: [
           pw.FontData(font: font1, name: 'OpenSans-Regular'),
         ],
