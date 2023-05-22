@@ -1,5 +1,33 @@
 # Changelog
 
+## 3.10.4
+
+- Fix Deprecation warning message
+- TableHelper data accepts Widgets as child
+- Add RTL support on TableHelper
+
+## 3.10.3
+
+- Set xml 6.3.0 as minimum dependency
+
+## 3.10.2
+
+- Fix Type1 font widths
+- Deprecate PdfArrayObject and PdfObjectDict
+- Improve PdfArray and PdfDict constructors
+- Fix underline on spans [RomanIvn]
+- Improve verbose output
+- Allow saving an unmodified document
+- Table cell: dynamic widget [Shahriyar Aghajani]
+- Move Table.fromTextArray to TableHelper.fromTextArray
+- Fix PdfImage constructor without alpha channel [Tomasz Gucio]
+- image.fromBytes() pass bytes offset [Aravindhan K]
+- Update xml dependency and deprecated getter
+
+## 3.10.1
+
+- Fix web debug build
+
 ## 3.10.0
 
 - Apply BoxShape and BorderRadius to selected Checkbox [Joseph Grabinger]
@@ -13,6 +41,9 @@
 - Fix Page Content
 - Reorganize data types
 - Improve Documents conformity
+- Make PdfXref a PdfIndirect descendent
+- Move Pdf generation settings to PdfSettings
+- Improve PdfXrefTable output
 
 ## 3.9.0
 

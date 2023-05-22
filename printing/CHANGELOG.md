@@ -1,5 +1,25 @@
 # Changelog
 
+## 5.11.0
+
+- Set Flutter 3.10 as the minimum version
+- Fix web builds with Flutter 3.10
+- Fix cmake build on Linux and Windows
+
+## 5.10.4
+
+- Update Google Fonts
+- Fix CMP0135 policy issue [Jemis Goti]
+- Fix raster crash on iOS and MacOS [Eduardo Vital Alencar Cunha]
+- Fix wrong format in directPrintPdf [<AlhasanAlQaisi>]
+- Add compatibility with Android Gradle Plugin 8.0 [asaarnak]
+- Add compatibility with  Flutter 3.10
+- Re-init UIPrinter cause issues with delegate [Hasan]
+
+## 5.10.3
+
+- Check if widget is mounted before setState [asaarnak]
+
 ## 5.10.2
 
 - Fix Flutter 3.9 deprecations

@@ -19,19 +19,25 @@ import 'dart:convert';
 import '../document.dart';
 import '../font/font_metrics.dart';
 import '../font/type1_fonts.dart';
+import '../format/dict.dart';
 import '../format/name.dart';
 import '../format/stream.dart';
 import '../format/string.dart';
 import '../point.dart';
-import 'object_dict.dart';
+import 'object.dart';
 import 'type1_font.dart';
 
 /// Pdf font object
-abstract class PdfFont extends PdfObjectDict {
+abstract class PdfFont extends PdfObject<PdfDict> {
   /// Constructs a [PdfFont]. This will attempt to map the font from a known
   /// font name to that in Pdf, defaulting to Helvetica if not possible.
   PdfFont.create(PdfDocument pdfDocument, {required this.subtype})
-      : super(pdfDocument, type: '/Font') {
+      : super(
+          pdfDocument,
+          params: PdfDict.values({
+            '/Type': const PdfName('/Font'),
+          }),
+        ) {
     pdfDocument.fonts.add(this);
   }
 
@@ -47,7 +53,6 @@ abstract class PdfFont extends PdfObjectDict {
       stdHW: 84,
       stdVW: 106,
       isFixedPitch: true,
-      missingWidth: 600,
     );
   }
 
@@ -63,7 +68,6 @@ abstract class PdfFont extends PdfObjectDict {
       stdHW: 51,
       stdVW: 51,
       isFixedPitch: true,
-      missingWidth: 600,
     );
   }
 
@@ -80,7 +84,6 @@ abstract class PdfFont extends PdfObjectDict {
       isFixedPitch: true,
       stdHW: 84,
       stdVW: 106,
-      missingWidth: 600,
     );
   }
 
@@ -97,7 +100,6 @@ abstract class PdfFont extends PdfObjectDict {
       italicAngle: -12,
       stdHW: 51,
       stdVW: 51,
-      missingWidth: 600,
     );
   }
 
@@ -279,9 +281,6 @@ See https://github.com/DavBfr/dart_pdf/wiki/Fonts-Management
 
   /// Spans the distance between the baseline and the lowest descending glyph
   double get descent;
-
-  /// Default width of a glyph
-  static const double defaultGlyphWidth = 0.600;
 
   /// Internal units per
   int get unitsPerEm;

@@ -24,35 +24,35 @@ import 'package:test/test.dart';
 void main() {
   test('Pdf Minimal', () async {
     var objser = 1;
-    const verbose = true;
-    const version = PdfVersion.pdf_1_4;
+
+    const settings = PdfSettings(
+      verbose: true,
+      version: PdfVersion.pdf_1_4,
+    );
 
     final pages = PdfObjectBase(
         objser: objser++,
-        verbose: verbose,
-        version: version,
-        params: PdfDict({
+        settings: settings,
+        params: PdfDict.values({
           '/Type': const PdfName('/Pages'),
           '/Count': const PdfNum(1),
         }));
 
     final content = PdfObjectBase(
         objser: objser++,
-        verbose: verbose,
-        version: version,
+        settings: settings,
         params: PdfDictStream(
           data: latin1.encode('30 811.88976 m 200 641.88976 l S'),
         ));
 
     final page = PdfObjectBase(
         objser: objser++,
-        verbose: verbose,
-        version: version,
-        params: PdfDict({
+        settings: settings,
+        params: PdfDict.values({
           '/Type': const PdfName('/Page'),
           '/Parent': pages.ref(),
           '/MediaBox': PdfArray.fromNum([0, 0, 595.27559, 841.88976]),
-          '/Resources': PdfDict({
+          '/Resources': PdfDict.values({
             '/ProcSet': PdfArray([
               const PdfName('/PDF'),
             ]),
@@ -64,9 +64,8 @@ void main() {
 
     final catalog = PdfObjectBase(
         objser: objser++,
-        verbose: verbose,
-        version: version,
-        params: PdfDict({
+        settings: settings,
+        params: PdfDict.values({
           '/Type': const PdfName('/Catalog'),
           '/Pages': pages.ref(),
         }));

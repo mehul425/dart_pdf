@@ -23,7 +23,7 @@ import '../format/array.dart';
 import '../format/base.dart';
 import '../format/dict.dart';
 import '../format/name.dart';
-import '../format/null.dart';
+import '../format/null_value.dart';
 import '../format/num.dart';
 import '../format/stream.dart';
 import '../format/string.dart';
@@ -34,7 +34,6 @@ import 'border.dart';
 import 'font.dart';
 import 'graphic_stream.dart';
 import 'object.dart';
-import 'object_dict.dart';
 import 'page.dart';
 
 class PdfChoiceField extends PdfAnnotWidget {
@@ -104,9 +103,12 @@ class PdfChoiceField extends PdfAnnotWidget {
   }
 }
 
-class PdfAnnot extends PdfObjectDict {
+class PdfAnnot extends PdfObject<PdfDict> {
   PdfAnnot(this.pdfPage, this.annot)
-      : super(pdfPage.pdfDocument, type: '/Annot') {
+      : super(pdfPage.pdfDocument,
+            params: PdfDict.values({
+              '/Type': const PdfName('/Annot'),
+            })) {
     pdfPage.annotations.add(this);
   }
 
@@ -313,7 +315,7 @@ abstract class PdfAnnotBase {
     }
 
     if (_appearances.isNotEmpty) {
-      params['/AP'] = PdfDict(_appearances);
+      params['/AP'] = PdfDict.values(_appearances);
       if (_as != null) {
         params['/AS'] = _as!;
       }
@@ -374,7 +376,7 @@ class PdfAnnotNamedLink extends PdfAnnotBase {
   @override
   void build(PdfPage page, PdfObject object, PdfDict params) {
     super.build(page, object, params);
-    params['/A'] = PdfDict(
+    params['/A'] = PdfDict.values(
       {
         '/S': const PdfName('/GoTo'),
         '/D': PdfString.fromString(dest),
@@ -410,7 +412,7 @@ class PdfAnnotUrlLink extends PdfAnnotBase {
   @override
   void build(PdfPage page, PdfObject object, PdfDict params) {
     super.build(page, object, params);
-    params['/A'] = PdfDict(
+    params['/A'] = PdfDict.values(
       {
         '/S': const PdfName('/URI'),
         '/URI': PdfString.fromString(url),
