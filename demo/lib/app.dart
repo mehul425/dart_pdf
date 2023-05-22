@@ -15,9 +15,7 @@
  */
 
 import 'dart:async';
-import 'dart:io';
 
-import 'package:external_path/external_path.dart';
 import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -133,14 +131,7 @@ class MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
             BuildContext context,
             LayoutCallback build,
             PdfPageFormat pageFormat,
-          ) async {
-            final bytes = await build(pageFormat);
-            final path = await ExternalPath.getExternalStoragePublicDirectory(
-                ExternalPath.DIRECTORY_DOWNLOADS);
-            final fileDef = File('$path/mehul1.pdf');
-            print(fileDef.path);
-            await fileDef.writeAsBytes(bytes);
-          },
+          ) async {},
         ),
         showLanding: true,
         onPrinted: _showPrintedToast,
