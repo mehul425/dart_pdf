@@ -37,7 +37,7 @@ class PdfRaster extends PdfRasterBase {
       pixels,
       width,
       height,
-      ui.PixelFormat.rgba8888,
+      ui.PixelFormat.rgbaFloat32,
       (ui.Image image) => comp.complete(image),
     );
     return comp.future;
