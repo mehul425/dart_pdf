@@ -156,14 +156,14 @@ class MultiPage extends Page {
   })  : _buildList = build,
         assert(maxPages > 0),
         super(
-          pageTheme: pageTheme,
-          pageFormat: pageFormat,
-          build: (_) => SizedBox(),
-          margin: margin,
-          theme: theme,
-          orientation: orientation,
-          textDirection: textDirection,
-        );
+        pageTheme: pageTheme,
+        pageFormat: pageFormat,
+        build: (_) => SizedBox(),
+        margin: margin,
+        theme: theme,
+        orientation: orientation,
+        textDirection: textDirection,
+      );
 
   final BuildListCallback _buildList;
 
@@ -216,18 +216,18 @@ class MultiPage extends Page {
     final _mustRotate = mustRotate;
     final pageHeight = _mustRotate ? pageFormat.width : pageFormat.height;
     final pageHeightMargin =
-        _mustRotate ? _margin.horizontal : _margin.vertical;
+    _mustRotate ? _margin.horizontal : _margin.vertical;
     final constraints = BoxConstraints(
         maxWidth: _mustRotate
             ? (pageFormat.height - _margin.vertical)
             : (pageFormat.width - _margin.horizontal));
     final fullConstraints = mustRotate
         ? BoxConstraints(
-            maxWidth: pageFormat.height - _margin.vertical,
-            maxHeight: pageFormat.width - _margin.horizontal)
+        maxWidth: pageFormat.height - _margin.vertical,
+        maxHeight: pageFormat.width - _margin.horizontal)
         : BoxConstraints(
-            maxWidth: pageFormat.width - _margin.horizontal,
-            maxHeight: pageFormat.height - _margin.vertical);
+        maxWidth: pageFormat.width - _margin.horizontal,
+        maxHeight: pageFormat.height - _margin.vertical);
     final calculatedTheme = theme ?? document.theme ?? ThemeData.base();
     Context? context;
     late double offsetEnd;
@@ -235,7 +235,7 @@ class MultiPage extends Page {
     var _index = 0;
     var sameCount = 0;
     final baseContext =
-        Context(document: document.document).inheritFromAll(<Inherited>[
+    Context(document: document.document).inheritFromAll(<Inherited>[
       calculatedTheme,
       if (pageTheme.textDirection != null)
         InheritedDirectionality(pageTheme.textDirection),
@@ -273,7 +273,7 @@ class MultiPage extends Page {
         offsetStart = pageHeight -
             (_mustRotate ? pageHeightMargin - _margin.bottom : _margin.top);
         offsetEnd =
-            _mustRotate ? pageHeightMargin - _margin.left : _margin.bottom;
+        _mustRotate ? pageHeightMargin - _margin.left : _margin.bottom;
 
         _pages.add(_MultiPageInstance(
           context: context,
@@ -327,8 +327,8 @@ class MultiPage extends Page {
         if (!canSpan) {
           throw Exception(
               'Widget won\'t fit into the page as its height (${child.box!.height}) '
-              'exceed a page height (${pageHeight - pageHeightMargin}). '
-              'You probably need a SpanningWidget or use a single page layout');
+                  'exceed a page height (${pageHeight - pageHeightMargin}). '
+                  'You probably need a SpanningWidget or use a single page layout');
         }
 
         final span = child;
@@ -339,7 +339,7 @@ class MultiPage extends Page {
         }
 
         final localConstraints =
-            constraints.copyWith(maxHeight: offsetStart - offsetEnd);
+        constraints.copyWith(maxHeight: offsetStart - offsetEnd);
         span.layout(context, localConstraints, parentUsesSize: false);
         assert(span.box != null);
         widgetContext = span.saveContext();
@@ -367,7 +367,7 @@ class MultiPage extends Page {
           child: child,
           constraints: constraints,
           widgetContext:
-              child is SpanningWidget && canSpan ? child.cloneContext() : null,
+          child is SpanningWidget && canSpan ? child.cloneContext() : null,
         ),
       );
 
@@ -384,7 +384,7 @@ class MultiPage extends Page {
     final pageHeight = _mustRotate ? pageFormat.width : pageFormat.height;
     final pageWidth = _mustRotate ? pageFormat.height : pageFormat.width;
     final pageHeightMargin =
-        _mustRotate ? _margin.horizontal : _margin.vertical;
+    _mustRotate ? _margin.horizontal : _margin.vertical;
     final pageWidthMargin = _mustRotate ? _margin.vertical : _margin.horizontal;
     final availableWidth = pageWidth - pageWidthMargin;
     final isRTL = pageTheme.textDirection == TextDirection.rtl;
@@ -392,7 +392,7 @@ class MultiPage extends Page {
       var offsetStart = pageHeight -
           (_mustRotate ? pageHeightMargin - _margin.bottom : _margin.top);
       var offsetEnd =
-          _mustRotate ? pageHeightMargin - _margin.left : _margin.bottom;
+      _mustRotate ? pageHeightMargin - _margin.left : _margin.bottom;
 
       if (pageTheme.buildBackground != null) {
         final child = pageTheme.buildBackground!(page.context);
@@ -479,7 +479,7 @@ class MultiPage extends Page {
           case MainAxisAlignment.spaceBetween:
             leadingSpace = 0.0;
             betweenSpace =
-                totalChildren > 1 ? freeSpace / (totalChildren - 1) : 0.0;
+            totalChildren > 1 ? freeSpace / (totalChildren - 1) : 0.0;
             break;
           case MainAxisAlignment.spaceAround:
             betweenSpace = totalChildren > 0 ? freeSpace / totalChildren : 0.0;
@@ -487,7 +487,7 @@ class MultiPage extends Page {
             break;
           case MainAxisAlignment.spaceEvenly:
             betweenSpace =
-                totalChildren > 0 ? freeSpace / (totalChildren + 1) : 0.0;
+            totalChildren > 0 ? freeSpace / (totalChildren + 1) : 0.0;
             leadingSpace = betweenSpace;
             break;
         }
@@ -500,7 +500,7 @@ class MultiPage extends Page {
         final fit = child is Flexible ? child.fit : FlexFit.loose;
         if (flex > 0) {
           assert(child is! SpanningWidget || child.canSpan == false,
-              'Cannot have a spanning widget flexible');
+          'Cannot have a spanning widget flexible');
           final maxChildExtent = child == lastFlexChild
               ? (freeSpace - allocatedFlexSpace)
               : spacePerFlex * flex;
