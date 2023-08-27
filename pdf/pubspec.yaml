@@ -8,7 +8,6 @@ screenshots:
   - description: 'Example of a generated document'
     path: example.jpg
 version: 3.10.5
-publish_to: "none"
 
 environment:
   sdk: ">=2.18.0 <4.0.0"
