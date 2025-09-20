@@ -69,7 +69,7 @@ class TextDecoration {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (other is! TextDecoration) {
       return false;
     }
@@ -323,7 +323,9 @@ class TextStyle {
       lineSpacing: other.lineSpacing,
       height: other.height,
       background: other.background,
-      decoration: decoration?.merge(other.decoration),
+      decoration: decoration == null
+          ? other.decoration
+          : decoration!.merge(other.decoration),
       decorationColor: other.decorationColor,
       decorationStyle: other.decorationStyle,
       decorationThickness: other.decorationThickness,

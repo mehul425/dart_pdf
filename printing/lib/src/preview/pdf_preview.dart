@@ -21,6 +21,7 @@ import 'package:pdf/widgets.dart' as pw;
 import '../callback.dart';
 import '../printing.dart';
 import '../printing_info.dart';
+import 'action_bar_theme.dart';
 import 'actions.dart';
 import 'controller.dart';
 import 'custom.dart';
@@ -32,7 +33,7 @@ export 'page.dart' show PdfPreviewPageData;
 class PdfPreview extends StatefulWidget {
   /// Show a pdf document built on demand
   const PdfPreview({
-    Key? key,
+    super.key,
     required this.build,
     required this.title,
     this.initialPageFormat,
@@ -66,8 +67,10 @@ class PdfPreview extends StatefulWidget {
     this.loadingWidget,
     this.onPageFormatChanged,
     this.dpi,
-  })  : _pagesBuilder = null,
-        super(key: key);
+    this.actionBarTheme = const PdfActionBarTheme(),
+    this.enableScrollToPage = false,
+    this.onZoomChanged,
+  }) : _pagesBuilder = null;
 
   /// Build a custom layout.
   ///
@@ -93,7 +96,7 @@ class PdfPreview extends StatefulWidget {
   /// )
   /// ```
   const PdfPreview.builder({
-    Key? key,
+    super.key,
     required this.build,
     required this.title,
     this.initialPageFormat,
@@ -127,9 +130,11 @@ class PdfPreview extends StatefulWidget {
     this.loadingWidget,
     this.onPageFormatChanged,
     this.dpi,
+    this.actionBarTheme = const PdfActionBarTheme(),
     required CustomPdfPagesBuilder pagesBuilder,
-  })  : _pagesBuilder = pagesBuilder,
-        super(key: key);
+    this.enableScrollToPage = false,
+    this.onZoomChanged,
+  }) : _pagesBuilder = pagesBuilder;
 
   static const _defaultPageFormats = <String, PdfPageFormat>{
     'A4': PdfPageFormat.a4,
@@ -235,9 +240,18 @@ class PdfPreview extends StatefulWidget {
   /// If not provided, this value is calculated.
   final double? dpi;
 
+  /// The style of actions bar.
+  final PdfActionBarTheme actionBarTheme;
+
   /// clients can pass this builder to render
   /// their own pages.
   final CustomPdfPagesBuilder? _pagesBuilder;
+
+  /// Whether scroll to page functionality enabled.
+  final bool enableScrollToPage;
+
+  /// The zoom mode has changed
+  final ValueChanged<bool>? onZoomChanged;
 
   @override
   PdfPreviewState createState() => PdfPreviewState();
@@ -308,7 +322,6 @@ class PdfPreviewState extends State<PdfPreview> {
         initialPageFormat: previewData.pageFormat,
         onComputeActualPageFormat: computeActualPageFormat,
       );
-      setState(() {});
     }
     super.didUpdateWidget(oldWidget);
   }
@@ -338,15 +351,18 @@ class PdfPreviewState extends State<PdfPreview> {
     final actions = <Widget>[];
 
     if (widget.useActions && widget.allowPrinting && info?.canPrint == true) {
-      actions.add(PdfPrintAction(
-        jobName: widget.pdfFileName,
-        dynamicLayout: widget.dynamicLayout,
-        onPrinted:
-            widget.onPrinted == null ? null : () => widget.onPrinted!(context),
-        onPrintError: widget.onPrintError == null
-            ? null
-            : (dynamic error) => widget.onPrintError!(context, error),
-      ));
+      actions.add(
+        PdfPrintAction(
+          jobName: widget.pdfFileName,
+          dynamicLayout: widget.dynamicLayout,
+          onPrinted: widget.onPrinted == null
+              ? null
+              : () => widget.onPrinted!(context),
+          onPrintError: widget.onPrintError == null
+              ? null
+              : (dynamic error) => widget.onPrintError!(context, error),
+        ),
+      );
     }
 
     if (widget.useActions && widget.downloadAction != null) {
@@ -354,17 +370,25 @@ class PdfPreviewState extends State<PdfPreview> {
     }
 
     if (widget.useActions && widget.allowSharing && info?.canShare == true) {
-      actions.add(PdfShareAction(
-        filename: widget.pdfFileName,
-        onShared:
-            widget.onPrinted == null ? null : () => widget.onPrinted!(context),
-      ));
+      actions.add(
+        PdfShareAction(
+          filename: widget.pdfFileName,
+          onShared: widget.onPrinted == null
+              ? null
+              : () => widget.onPrinted!(context),
+          subject: widget.shareActionExtraSubject,
+          emails: widget.shareActionExtraEmails,
+          body: widget.shareActionExtraBody,
+        ),
+      );
     }
 
     if (widget.useActions && widget.canChangePageFormat) {
-      actions.add(PdfPageFormatAction(
-        pageFormats: widget.pageFormats,
-      ));
+      actions.add(
+        PdfPageFormatAction(
+          pageFormats: widget.pageFormats,
+        ),
+      );
     }
 
     if (widget.useActions && widget.canChangeOrientation) {
@@ -430,6 +454,8 @@ class PdfPreviewState extends State<PdfPreview> {
             shouldRepaint: widget.shouldRepaint,
             pagesBuilder: widget._pagesBuilder,
             dpi: widget.dpi,
+            enableScrollToPage: widget.enableScrollToPage,
+            onZoomChanged: widget.onZoomChanged,
           );
         }),
       ),

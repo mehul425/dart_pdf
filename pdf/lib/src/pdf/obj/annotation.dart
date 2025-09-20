@@ -104,8 +104,10 @@ class PdfChoiceField extends PdfAnnotWidget {
 }
 
 class PdfAnnot extends PdfObject<PdfDict> {
-  PdfAnnot(this.pdfPage, this.annot)
+  PdfAnnot(this.pdfPage, this.annot, {int? objser, int objgen = 0})
       : super(pdfPage.pdfDocument,
+            objser: objser,
+            objgen: objgen,
             params: PdfDict.values({
               '/Type': const PdfName('/Annot'),
             })) {
@@ -171,12 +173,17 @@ abstract class PdfAnnotBase {
     this.border,
     this.content,
     this.name,
-    this.flags,
+    Set<PdfAnnotFlags>? flags,
     this.date,
     this.color,
     this.subject,
     this.author,
-  });
+  }) {
+    this.flags = flags ??
+        {
+          PdfAnnotFlags.print,
+        };
+  }
 
   /// The subtype of the outline, ie text, note, etc
   final String subtype;
@@ -199,7 +206,7 @@ abstract class PdfAnnotBase {
   final String? subject;
 
   /// Flags specifying various characteristics of the annotation
-  final Set<PdfAnnotFlags>? flags;
+  late final Set<PdfAnnotFlags> flags;
 
   /// Last modification date
   final DateTime? date;
@@ -212,11 +219,11 @@ abstract class PdfAnnotBase {
   PdfName? _as;
 
   int get flagValue {
-    if (flags == null || flags!.isEmpty) {
+    if (flags.isEmpty) {
       return 0;
     }
 
-    return flags!
+    return flags
         .map<int>((PdfAnnotFlags e) => 1 << e.index)
         .reduce((int a, int b) => a | b);
   }
@@ -261,7 +268,7 @@ abstract class PdfAnnotBase {
 
     final bBox = boundingBox ?? PdfRect.fromPoints(PdfPoint.zero, rect.size);
     s.params['/BBox'] =
-        PdfArray.fromNum([bBox.x, bBox.y, bBox.width, bBox.height]);
+        PdfArray.fromNum([bBox.left, bBox.bottom, bBox.width, bBox.height]);
     final g = PdfGraphics(s, s.buf);
 
     if (selected && name != null) {
@@ -294,7 +301,7 @@ abstract class PdfAnnotBase {
       params['/NM'] = PdfString.fromString(name!);
     }
 
-    if (flags != null && flags!.isNotEmpty) {
+    if (flags.isNotEmpty) {
       params['/F'] = PdfNum(flagValue);
     }
 

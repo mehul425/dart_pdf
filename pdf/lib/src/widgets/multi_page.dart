@@ -65,12 +65,20 @@ mixin SpanningWidget on Widget {
       saveContext().apply(context);
 }
 
+/// Trigger a page break if there is not enough free space.
+/// If freeSpace is null, a page break is always performed.
 class NewPage extends Widget {
+  NewPage({this.freeSpace});
+  final double? freeSpace;
+
   @override
   void layout(Context context, BoxConstraints constraints,
       {bool parentUsesSize = false}) {
     box = PdfRect.zero;
   }
+
+  bool newPageNeeded(double availableSpace) =>
+      (freeSpace == null) || (availableSpace < freeSpace!);
 }
 
 @immutable
@@ -194,15 +202,13 @@ class MultiPage extends Page {
         ..setTransform(
           Matrix4.identity()
             ..rotateZ(-math.pi / 2)
-            ..translate(
-              x - pageHeight + _margin.top - _margin.left,
-              y + _margin.left - _margin.bottom,
-            ),
+            ..translateByDouble(x - pageHeight + _margin.top - _margin.left,
+                y + _margin.left - _margin.bottom, 0, 1),
         );
       child.paint(context);
       context.canvas.restoreContext();
     } else {
-      child.box = child.box!.copyWith(x: x, y: y);
+      child.box = child.box!.copyWith(left: x, bottom: y);
       child.paint(context);
     }
   }
@@ -230,7 +236,7 @@ class MultiPage extends Page {
         maxHeight: pageFormat.height - _margin.vertical);
     final calculatedTheme = theme ?? document.theme ?? ThemeData.base();
     Context? context;
-    late double offsetEnd;
+    var offsetEnd = 0.0;
     double? offsetStart;
     var _index = 0;
     var sameCount = 0;
@@ -246,14 +252,23 @@ class MultiPage extends Page {
     while (_index < children.length) {
       final child = children[_index];
 
-      // Detect too big widgets
-      if (sameCount++ > maxPages) {
-        throw TooManyPagesException(
-            'This widget created more than $maxPages pages. This may be an issue in the widget or the document. See https://pub.dev/documentation/pdf/latest/widgets/MultiPage-class.html');
-      }
+      assert(() {
+        // Detect too big widgets
+        if (sameCount++ > maxPages) {
+          throw TooManyPagesException(
+              'This widget created more than $maxPages pages. This may be an issue in the widget or the document. See https://pub.dev/documentation/pdf/latest/widgets/MultiPage-class.html');
+        }
+        return true;
+      }());
+
+      // Calculate available space of the current page
+      final freeSpace = (offsetStart == null)
+          ? fullConstraints.maxHeight
+          : offsetStart - offsetEnd;
 
       // Create a new page if we don't already have one
-      if (context == null || child is NewPage) {
+      if (context == null ||
+          (child is NewPage) && child.newPageNeeded(freeSpace)) {
         final pdfPage = PdfPage(
           document.document,
           pageFormat: pageFormat,

@@ -32,6 +32,7 @@ class SvgImage extends Widget {
     double? width,
     double? height,
     PdfColor? colorFilter,
+    SvgCustomFontLookup? customFontLookup,
   }) {
     final xml = XmlDocument.parse(svg);
     final parser = SvgParser(
@@ -46,6 +47,7 @@ class SvgImage extends Widget {
       clip,
       width,
       height,
+      customFontLookup,
     );
   }
 
@@ -56,6 +58,7 @@ class SvgImage extends Widget {
     this.clip,
     this.width,
     this.height,
+    this.customFontLookup,
   );
 
   final SvgParser _svgParser;
@@ -69,6 +72,8 @@ class SvgImage extends Widget {
   final double? width;
 
   final double? height;
+
+  final SvgCustomFontLookup? customFontLookup;
 
   late FittedSizes sizes;
 
@@ -98,15 +103,12 @@ class SvgImage extends Widget {
     final sourceRect = _alignment.inscribe(sizes.source!, _svgParser.viewBox);
     final sx = sizes.destination!.x / sizes.source!.x;
     final sy = sizes.destination!.y / sizes.source!.y;
-    final dx = sourceRect.x * sx;
-    final dy = sourceRect.y * sy;
+    final dx = sourceRect.left * sx;
+    final dy = sourceRect.bottom * sy;
 
     final mat = Matrix4.identity()
-      ..translate(
-        box!.x - dx,
-        box!.y + dy + box!.height,
-      )
-      ..scale(sx, -sy);
+      ..translateByDouble(box!.left - dx, box!.bottom + dy + box!.height, 0, 1)
+      ..scaleByDouble(sx, -sy, 1, 1);
 
     context.canvas.saveContext();
     if (clip) {
@@ -126,6 +128,7 @@ class SvgImage extends Widget {
         context.page.pageFormat.width,
         context.page.pageFormat.height,
       ),
+      customFontLookup: customFontLookup,
     );
     painter.paint();
     context.canvas.restoreContext();
@@ -154,3 +157,6 @@ class DecorationSvgImage extends DecorationGraphic {
     );
   }
 }
+
+typedef SvgCustomFontLookup = Font? Function(
+    String fontFamily, String fontStyle, String fontWeight);

@@ -15,10 +15,10 @@
  */
 
 import 'dart:async';
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'callback.dart';
+import 'platform_js.dart' if (dart.library.io) 'platform_os.dart';
 import 'raster.dart';
 
 /// Represents a print job to communicate with the platform implementation
@@ -74,13 +74,13 @@ class PrintJobs {
       onHtmlRendered: onHtmlRendered,
       onCompleted: onCompleted,
       onPageRasterized: onPageRasterized,
-      useFFI: Platform.isMacOS || Platform.isIOS,
+      useFFI: useFFI,
     );
     _printJobs[job.index] = job;
     return job;
   }
 
-  /// Retrive an existing job
+  /// Retrieve an existing job
   PrintJob? getJob(int index) {
     return _printJobs[index];
   }

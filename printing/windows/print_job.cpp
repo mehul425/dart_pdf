@@ -361,8 +361,8 @@ void PrintJob::rasterPdf(std::vector<uint8_t> data,
     auto bWidth = static_cast<int>(width * scale);
     auto bHeight = static_cast<int>(height * scale);
 
-    auto bitmap = FPDFBitmap_Create(bWidth, bHeight, 0);
-    FPDFBitmap_FillRect(bitmap, 0, 0, bWidth, bHeight, 0xffffffff);
+    auto bitmap = FPDFBitmap_Create(bWidth, bHeight, 1);
+    FPDFBitmap_FillRect(bitmap, 0, 0, bWidth, bHeight, 0x00ffffff);
 
     FPDF_RenderPageBitmap(bitmap, page, 0, 0, bWidth, bHeight, 0,
                           FPDF_ANNOT | FPDF_LCD_TEXT);
@@ -398,9 +398,8 @@ void PrintJob::rasterPdf(std::vector<uint8_t> data,
 
 std::map<std::string, bool> PrintJob::printingInfo() {
   return std::map<std::string, bool>{
-      {"directPrint", true},     {"dynamicLayout", true},   {"canPrint", true},
-      {"canListPrinters", true}, {"canConvertHtml", false}, {"canShare", true},
-      {"canRaster", true},
+      {"directPrint", true},     {"dynamicLayout", true}, {"canPrint", true},
+      {"canListPrinters", true}, {"canShare", true},      {"canRaster", true},
   };
 }
 

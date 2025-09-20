@@ -1,5 +1,59 @@
 # Changelog
 
+## 3.11.4
+
+- Improve performance of table layout [Pieter van Loon]
+- Reduce freezes on web [Kostia Sokolovskyi]
+- creates catalog.names earlier for attached files [ilaurillard]
+- fix: Prevent "Index out of range" error when reading simple glyphs in certain fonts  [Eghosa Osayande]
+- Improve PdfRect naming consistency
+- Migrate to vector_math 2.2.0
+
+## 3.11.3
+
+- Fix CMYK
+
+## 3.11.2
+
+- Add support for custom fonts in SVGs. [Tyler Denniston]
+- Fix MultiPage.maxPages not checked with release builds
+- Fix PdfColorCmyk.fromRgb
+- Table widget refactors [Graham Smith]
+- Add support for creating PDF/A 3b [ilaurillard]
+- Add helper functions to replace text styles and cell content [Brian Kayfitz]
+- Fix TextStyle merge decoration [AtlasAutocode]
+- Use secure random number generator for document ID generation
+
+## 3.11.1
+
+- Fixed display problems with textfields [ilaurillard]
+- Tighten dependencies
+
+## 3.11.0
+
+- Save in an isolate when available
+- NewPage with freeSpace extended [Stefan]
+
+## 3.10.8
+
+- Add Flutter's Logical Pixel constant
+- Add support for existing reference objects
+- Update barcode golden pdf
+- Add support for hyphenation [ilja]
+- Add an option to disable bidirectional support [Olzhas-Suleimen]
+- Fix operator== type in TextDecoration class
+- Fixed wrong empty line height [janiselfert]
+- Add Support old Arabic method without bidi package [Baghdady92]
+
+## 3.10.7
+
+- Fix empty lines text gap
+- Fix lookup index of glyph for space character [Hendrik-Brower]
+
+## 3.10.6
+
+- Update bidi dependency
+
 ## 3.10.5
 
 - Improve TTF writer with multi-compound characters
@@ -7,6 +61,7 @@
 - Add RTL support [Milad-Akarie]
 - Fix Arabic fonts missing isolated form [Milad-Akarie]
 - Throw multi page error explicitly [Marcin Jeleński]
+- Fix deprecations
 
 ## 3.10.4
 
