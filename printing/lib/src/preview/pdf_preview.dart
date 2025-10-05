@@ -431,19 +431,19 @@ class PdfPreviewState extends State<PdfPreview> {
           titleSpacing: widget.showLanding ? 0 : 16,
           leading: widget.showLanding
               ? InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  customBorder: const CircleBorder(),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(widget.landing),
-                  ),
-                )
+            onTap: () {
+              Navigator.pop(context);
+            },
+            customBorder: const CircleBorder(),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(widget.landing),
+            ),
+          )
               : null,
           actions: actions,
           bottom: widget.bottom,
-          toolbarHeight: toolbarHeight,
+          toolbarHeight: widget.toolbarHeight,
         ),
         body: Builder(builder: (context) {
           final controller = PdfPreviewController.listen(context);
