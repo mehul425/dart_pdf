@@ -39,6 +39,7 @@ class PdfPreview extends StatefulWidget {
     this.initialPageFormat,
     this.landing = Icons.arrow_back,
     this.downloadAction,
+    this.bottom,
     this.allowPrinting = true,
     this.allowSharing = true,
     this.showLanding = false,
@@ -100,6 +101,7 @@ class PdfPreview extends StatefulWidget {
     required this.build,
     required this.title,
     this.initialPageFormat,
+    this.bottom,
     this.landing = Icons.arrow_back,
     this.allowPrinting = true,
     this.showLanding = false,
@@ -153,6 +155,7 @@ class PdfPreview extends StatefulWidget {
   final PdfPreviewAction? downloadAction;
   final bool showLanding;
   final IconData landing;
+  final PreferredSizeWidget? bottom;
 
   /// Add a button to share the pdf document
   final bool allowSharing;
@@ -436,6 +439,7 @@ class PdfPreviewState extends State<PdfPreview> {
                 )
               : null,
           actions: actions,
+          bottom: widget.bottom,
         ),
         body: Builder(builder: (context) {
           final controller = PdfPreviewController.listen(context);
